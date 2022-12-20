@@ -1,0 +1,5 @@
+
+interface IUpgradable
+{
+    void SetUpgrades();
+}
