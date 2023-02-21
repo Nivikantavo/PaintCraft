@@ -823,7 +823,6 @@ GameObject:
   - component: {fileID: 7521982038188422329}
   - component: {fileID: 498053539533314499}
   - component: {fileID: 2378299485468850097}
-  - component: {fileID: 8810211599903378829}
   - component: {fileID: 8810211599903378819}
   - component: {fileID: 8810211599903378818}
   m_Layer: 0
@@ -888,28 +887,6 @@ CapsuleCollider:
   m_Height: 2.1672049
   m_Direction: 1
   m_Center: {x: 0, y: 1.0761747, z: 0}
---- !u!195 &8810211599903378829
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6789223817899148970}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 2
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &8810211599903378819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,7 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _progressTracker: {fileID: 0}
-  _agent: {fileID: 8810211599903378829}
+  _agent: {fileID: 0}
   _levelRevard: 10
   _revardDistance: 2
 --- !u!114 &8810211599903378818

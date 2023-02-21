@@ -64,6 +64,7 @@ public class Boss : MonoBehaviour
     {
         _player.PlayerWallet.AddMoney(_levelRevard);
         PlayerAttained?.Invoke();
+        Debug.Log("PlayerAttained");
         enabled = false;
     }
 }

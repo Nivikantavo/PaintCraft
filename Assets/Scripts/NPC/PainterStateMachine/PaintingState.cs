@@ -1,29 +1,24 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Painter))]
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Worker))]
 public class PaintingState : State
 {
     [SerializeField] private float _stoppingDistance;
 
-    private List<Room> _rooms;
     private List<Wall> _currentWalls;
     private NavMeshAgent _agent;
-    private Room _currentRoom;
+    private Worker _worker;
     private Wall _currentWall;
-    private Painter _painter;
     private Coroutine _paintingCorutine;
-
-    public void Initialize(List<Room> rooms)
-    {
-        _rooms = rooms;
-    }
 
     private void Awake()
     {
-        _painter = GetComponent<Painter>();
+        _worker = GetComponent<Worker>();
         _agent = GetComponent<NavMeshAgent>();
     }
 
@@ -31,17 +26,12 @@ public class PaintingState : State
     {
         _agent.stoppingDistance = _stoppingDistance;
 
-        if (_currentRoom == null)
+        if (_worker.CurrentRoom == null)
         {
-            ChooseRoom();
+            _worker.ChooseRoom();
         }
 
         FindeUnpaintedWall();
-
-        foreach(Room room in _rooms)
-        {
-            room.PaintedComplited += OnPaintedComplited;
-        }
     }
     private void OnDisable()
     {
@@ -52,10 +42,6 @@ public class PaintingState : State
 
         _agent.stoppingDistance = 0;
 
-        foreach (Room room in _rooms)
-        {
-            room.PaintedComplited -= OnPaintedComplited;
-        }
         if(_paintingCorutine != null)
         {
             StopCoroutine(_paintingCorutine);
@@ -77,68 +63,42 @@ public class PaintingState : State
 
     private void FindeUnpaintedWall()
     {
-        if(_rooms != null && _rooms.Count > 0)
+        int randomNumber;
+
+        if (_worker.CurrentRoom.DonePercentage >= 100)
         {
-            int randomNumber;
-
-            foreach (Room room in _rooms)
+            if (_worker.ChooseRoom() == false)
             {
-                if (ColorComparator.CompareColor(room.Color, _painter.CurrentColor))
-                {
-                    _currentRoom = room;
-                }
+                enabled = false;
             }
-
-            if (_currentRoom.DonePercentage >= 100)
-            {
-                ChooseRoom();
-            }
-
-            _currentWalls = _currentRoom.GetUnpaitedWalls();
-
-            randomNumber = Random.Range(0, _currentWalls.Count);
-            _currentWall = _currentWalls[randomNumber];
-
-            _paintingCorutine = null;
         }
-        else
-        {
-            _agent.isStopped = true;
-        }
+
+        _currentWalls = _worker.CurrentRoom.GetUnpaitedWalls();
+
+        randomNumber = Random.Range(0, _currentWalls.Count);
+        _currentWall = _currentWalls[randomNumber];
+
+        _paintingCorutine = null;
     }
 
     private void PaintingWalls()
     {
-        _agent.SetDestination(_currentWall.transform.position);
+        _agent.SetDestination(_currentWall.PaintigPoint);
         Debug.DrawLine(_currentWall.transform.position, transform.position, Color.red);
 
-        if (Vector3.Distance(_currentWall.transform.position, transform.position) <= _stoppingDistance + 1 && _currentWall.Painted >= 1)
+        if (Vector3.Distance(_currentWall.PaintigPoint, transform.position) <= _stoppingDistance + 1)
         {
-            if (_currentWalls.IndexOf(_currentWall) < _currentWalls.Count - 1)
+            if (_currentWall.Painted >= 1)
             {
-                _currentWall = _currentWalls[_currentWalls.IndexOf(_currentWall) + 1];
-            }
-            else
-            {
-                FindeUnpaintedWall();
+                if (_currentWalls.IndexOf(_currentWall) < _currentWalls.Count - 1)
+                {
+                    _currentWall = _currentWalls[_currentWalls.IndexOf(_currentWall) + 1];
+                }
+                else
+                {
+                    FindeUnpaintedWall();
+                }
             }
         }
-    }
-
-    private void ChooseRoom()
-    {
-        if(_rooms.Count > 0)
-        {
-            int randomNumber = Random.Range(0, _rooms.Count);
-
-            _currentRoom = _rooms[randomNumber];
-            _painter.TryTakePaint(0, _currentRoom.Color);
-        }
-    }
-
-    private void OnPaintedComplited(Room room)
-    {
-        _rooms.Remove(room);
-        _currentWalls = null;
     }
 }

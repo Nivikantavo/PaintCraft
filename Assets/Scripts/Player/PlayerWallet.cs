@@ -7,6 +7,8 @@ public class PlayerWallet : MonoBehaviour
 
     public event UnityAction<int> MoneyCountChanged;
 
+    private const string _moneyCount = "MoneyCount";
+
     public void AddMoney(int money)
     {
         if (money > 0)
@@ -16,16 +18,29 @@ public class PlayerWallet : MonoBehaviour
         }
     }
 
-    public void SpendMoney(int price)
+    public bool SpendMoney(int price)
     {
         if(Money >= price)
         {
             Money -= price;
             MoneyCountChanged?.Invoke(-price);
+            return true;
         }
         else
         {
-            throw new System.Exception("not enough money");
+            return false;
         }
+    }
+
+    private void OnEnable()
+    {
+        Money = PlayerPrefs.GetInt(_moneyCount);
+        MoneyCountChanged?.Invoke(Money);
+        AddMoney(10000);
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetInt(_moneyCount, Money);
     }
 }

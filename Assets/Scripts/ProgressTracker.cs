@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class ProgressTracker : MonoBehaviour
 {
@@ -80,6 +79,7 @@ public class ProgressTracker : MonoBehaviour
     {
         StartCoroutine(DelayBeforeEnd());
         LevelEnd?.Invoke();
+        Debug.Log("OnLevelEnd");
     }
 
     private IEnumerator DelayBeforeEnd()

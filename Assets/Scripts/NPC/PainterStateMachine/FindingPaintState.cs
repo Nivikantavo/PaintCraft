@@ -1,26 +1,26 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(Worker))]
 public class FindingPaintState : State
 {
-    private List<Room> _rooms;
     private List<Storage> _storages;
     private NavMeshAgent _agent;
-    private Room _currentRoom;
+    private Worker _worker;
     private Storage _currentStorage;
     private CapsuleCollider _collider;
 
-    public void Initialize(List<Storage> storages, List<Room> rooms)
+    public void Initialize(List<Storage> storages)
     {
         _storages = storages;
-        _rooms = rooms;
     }
 
     private void Awake()
     {
+        _worker = GetComponent<Worker>();
         _agent = GetComponent<NavMeshAgent>();
         _collider = GetComponent<CapsuleCollider>();
     }
@@ -37,41 +37,39 @@ public class FindingPaintState : State
 
     private void Update()
     {
-        if( _currentRoom == null)
+        if( _worker.CurrentRoom == null)
         {
-            ChooseRoom();
+            _worker.ChooseRoom();
         }
 
-        _currentStorage = FindStorage();
-
-        TakePaint();
-    }
-
-    private void ChooseRoom()
-    {
-        int randomNumber = UnityEngine.Random.Range(0, _rooms.Count);
-
-        _currentRoom = _rooms[randomNumber];
+        if(_currentStorage != null && ColorComparator.CompareColor(_currentStorage.PaintColor, _worker.CurrentRoom.Color) )
+        {
+            GoForPaint();
+        }
+        else
+        {
+            _currentStorage = FindStorage();
+        }
     }
 
     private Storage FindStorage()
     {
         foreach (Storage storage in _storages)
         {
-            if (ColorComparator.CompareColor(storage.PaintColor, _currentRoom.Color))
+            if (ColorComparator.CompareColor(storage.PaintColor, _worker.CurrentRoom.Color))
             {
                 return storage;
             }
         }
-        Debug.Log("Не найдено нужного Storage");
-        throw new InvalidOperationException();
+        _worker.ChooseRoom();
+        return FindStorage();
     }
 
-    private void TakePaint()
+    private void GoForPaint()
     {
         List<Vector3> route = _currentStorage.GetBucketsPosition();
-
-        foreach(Vector3 routePoint in route)
+        
+        foreach (Vector3 routePoint in route)
         {
             _agent.SetDestination(routePoint);
         }

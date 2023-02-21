@@ -34,19 +34,19 @@ public class Storage : MonoBehaviour
         return positions;
     }
 
-    public StoragePoint TryGetFreePoint()
+    public void TryGetFreePoint(out StoragePoint storagePoint)
     {
+        storagePoint = null;
         for (int i = 0; i < _storagePoints.GetLength(0); i++)
         {
             for (int j = 0; j < _storagePoints.GetLength(1); j++)
             {
                 if (_storagePoints[i, j].IsFree == true)
                 {
-                    return _storagePoints[i, j];
+                    storagePoint = _storagePoints[i, j];
                 }
             }
         }
-        return null;
     }
 
     public StoragePoint[] GetPointsRow(int rowNumber)

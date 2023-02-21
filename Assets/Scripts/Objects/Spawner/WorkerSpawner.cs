@@ -15,7 +15,8 @@ public class WorkerSpawner : MonoBehaviour
 
     private void Awake()
     {
-        int workersCount = PlayerPrefs.GetInt(_workersCount, 5);
+        int workersCount = PlayerPrefs.GetInt(_workersCount, 0);
+        Debug.Log(PlayerPrefs.GetInt(_workersCount));
 
         for (int i = 0; i < workersCount; i++)
         {

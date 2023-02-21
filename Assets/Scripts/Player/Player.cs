@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Player : Painter, IUpgradable
 {
@@ -12,7 +11,7 @@ public class Player : Painter, IUpgradable
 
     protected override void Awake()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         base.Awake();
     }
 

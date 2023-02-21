@@ -121,7 +121,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.19
+      scalar: 0.44
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4888,8 +4888,8 @@ MonoBehaviour:
   _sprite: {fileID: 7705756981217530907}
   _paidText: {fileID: 7705756981292446628}
   _paidParticles: {fileID: 563605160}
-  _price: 100
-  _areaName: BuyTankArea
+  _price: 3000
+  _areaName: BuyWorkerArea3
 --- !u!222 &7705756981027565978
 CanvasRenderer:
   m_ObjectHideFlags: 0

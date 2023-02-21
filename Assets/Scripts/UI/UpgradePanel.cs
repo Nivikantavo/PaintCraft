@@ -1,3 +1,4 @@
+using Lean.Localization;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -8,7 +9,7 @@ public class UpgradePanel : MonoBehaviour
 {
     [SerializeField] private List<UpgradeView> _upgradeView;
 
-    [SerializeField] private TMP_Text _label;
+    [SerializeField] private LeanLocalizedTextMeshProUGUI _label;
     [SerializeField] private Image _image;
 
     private UpgradeStation _upgradeStation;
@@ -42,7 +43,7 @@ public class UpgradePanel : MonoBehaviour
         if(upgradeStation != null)
         {
             _upgradeStation = upgradeStation;
-            _label.text = upgradeStation.Label;
+            _label.TranslationName = upgradeStation.Label;
             _image.sprite = upgradeStation.Image;
 
             Render();

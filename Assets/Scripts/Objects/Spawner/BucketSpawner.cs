@@ -10,7 +10,7 @@ public class BucketSpawner : ObjectPool
     [SerializeField] private float _fillingTime;
     [SerializeField] private float _spawnDelay;
     [SerializeField] private Color _fillColor;
-    [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private ParticleSystem _paintParticles;
     
     [SerializeField] private Sorter _sorter;
 
@@ -22,7 +22,7 @@ public class BucketSpawner : ObjectPool
 
     private void Awake()
     {
-        ParticleSystem.MainModule mainModule = _particleSystem.main;
+        var mainModule = _paintParticles.main;
         mainModule.startColor = _fillColor;
     }
 
@@ -57,7 +57,6 @@ public class BucketSpawner : ObjectPool
             backet.transform.position = spawnPoint;
 
             _spawnPoint.SetBucket(paintBacket);
-            paintBacket.SetStoragePoint(_spawnPoint);
 
             BucketSpawned?.Invoke(paintBacket);
 

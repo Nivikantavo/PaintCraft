@@ -20,8 +20,7 @@ public class BuyArea : MonoBehaviour
         _paid = PlayerPrefs.GetInt(_areaName, 0);
         if(_paid >= _price)
         {
-            UnlockObject();
-            gameObject.SetActive(false);
+            UnlockObject(false);
         }
         else
         {
@@ -45,9 +44,12 @@ public class BuyArea : MonoBehaviour
     {
         if (other.TryGetComponent<Player>(out Player player))
         {
-            StopCoroutine(_paidCorutine);
-            _paidParticles.Stop();
-            _paidCorutine = null;
+            if(_paidCorutine != null)
+            {
+                StopCoroutine(_paidCorutine);
+                _paidParticles.Stop();
+                _paidCorutine = null;
+            }
 
             PlayerPrefs.SetInt(_areaName, _paid);
         }
@@ -55,31 +57,53 @@ public class BuyArea : MonoBehaviour
 
     private IEnumerator PaidCorutine(Player player)
     {
-        ParticleSystem.VelocityOverLifetimeModule particlesVelocity = _paidParticles.velocityOverLifetime;
-        Vector3 vector3 = new Vector3(0, 1);
-
+        WaitForSeconds delay = new(0.01f);
+        Vector3 particlesOffset = new(0, 1);
+        int contribution = _price / 100;
 
         while (_price > _paid)
         {
-            player.PlayerWallet.SpendMoney(1);
-            _paidParticles.Play();
-            _paidParticles.transform.position = player.transform.position + vector3;
-            _paid += 1;
-            _paidText.text = (_price - _paid).ToString();
-            yield return null;
+            if(_price - _paid < contribution)
+            {
+                contribution = _price - _paid;
+            }
+            else if(player.PlayerWallet.Money < contribution && player.PlayerWallet.Money > 0)
+            {
+                contribution = player.PlayerWallet.Money;
+            }
+
+            if (player.PlayerWallet.SpendMoney(contribution))
+            {
+                if(_paidParticles.isPlaying == false)
+                {
+                    _paidParticles.Play();
+                }
+                
+                _paidParticles.transform.position = player.transform.position + particlesOffset;
+                _paid += contribution;
+                _paidText.text = (_price - _paid).ToString();
+                yield return delay;
+            }
+            else
+            {
+                break;
+            }
         }
 
-        if (_paid == _price)
+        if (_paid >= _price)
         {
-            _paidParticles.Stop();
-            UnlockObject();
+            UnlockObject(true);
         }
+        _paidParticles.Stop();
     }
 
-    private void UnlockObject()
+    protected virtual void UnlockObject(bool firstUnlock)
     {
         _purchasedObject.SetActive(true);
-        _sprite.enabled = false;
-        _paidText.enabled = false;
+        if (firstUnlock)
+        {
+            PlayerPrefs.SetInt(_areaName, _paid);
+        }
+        gameObject.SetActive(false);
     }
 }

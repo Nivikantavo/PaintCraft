@@ -1,5 +1,4 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,6 +6,7 @@ public class Wall : Interactable, IUpgradable
 {
     public float Painted => _painted;
     public Color Color => _color;
+    public Vector3 PaintigPoint => _paintingPoint.position;
 
     [SerializeField] private ParticleSystem _coinEffect;
     [SerializeField] private int _defaultReward;
@@ -17,6 +17,7 @@ public class Wall : Interactable, IUpgradable
     [SerializeField] private Color _color;
     [SerializeField] private Vector2 _endSize;
     [SerializeField] private Vector3 _particlesOffset;
+    [SerializeField] private Transform _paintingPoint;
 
     [Range(0, 1)]
     private float _painted;

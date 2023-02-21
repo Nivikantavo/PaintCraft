@@ -30,7 +30,6 @@ public class Upgradable : MonoBehaviour
 
     public virtual void Upgrade()
     {
-        Debug.Log("Upgrade " + _parameterName);
         CurrentLevel++;
         _currentParemeter = _startParemeter + (UpgradeStep * CurrentLevel);
         SaveUpgrade(_currentParemeter);

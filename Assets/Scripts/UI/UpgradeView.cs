@@ -1,3 +1,4 @@
+using Lean.Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,17 +6,22 @@ using UnityEngine.UI;
 
 public class UpgradeView : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _label;
+    [SerializeField] private LeanLocalizedTextMeshProUGUI _description;
     [SerializeField] private TMP_Text _price;
-    [SerializeField] private TMP_Text _level;
+    [SerializeField] private TMP_Text _currentLevel;
     [SerializeField] private Button _upgradeButton;
+    [SerializeField] private GameObject _maxLevel;
+    [SerializeField] private GameObject _priceGroup;
+    [SerializeField] private GameObject _levelGroup;
 
     private Upgradable _upgradable;
 
     public event UnityAction<Upgradable> UpgradeButtonClick;
 
+
     private void OnEnable()
     {
+        TryLockButton();
         _upgradeButton.onClick.AddListener(OnUpgradeButtonClick);
         _upgradeButton.onClick.AddListener(TryLockButton);
     }
@@ -29,9 +35,9 @@ public class UpgradeView : MonoBehaviour
     public void Renderer(Upgradable upgradable)
     {
         _upgradable = upgradable;
-        _label.text = upgradable.Label;
+        _description.TranslationName = upgradable.Label;
         _price.text = upgradable.Price.ToString();
-        _level.text = upgradable.Level.ToString();
+        _currentLevel.text = upgradable.Level.ToString();
 
         if (_upgradable.Level == _upgradable.MaxLevel)
         {
@@ -53,6 +59,9 @@ public class UpgradeView : MonoBehaviour
         if(_upgradable.Level == _upgradable.MaxLevel)
         {
             _upgradeButton.interactable = false;
+            _maxLevel.SetActive(true);
+            _priceGroup.SetActive(false);
+            _levelGroup.SetActive(false);
         }
     }
 }

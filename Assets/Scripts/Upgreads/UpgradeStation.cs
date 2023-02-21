@@ -19,8 +19,9 @@ public class UpgradeStation : MonoBehaviour
         if (other.TryGetComponent<Player>(out Player player))
         {
             _player = player;
-            _upgradPanel.gameObject.SetActive(true);
             _upgradPanel.Initialize(this);
+            _upgradPanel.gameObject.SetActive(true);
+            
         }
     }
 

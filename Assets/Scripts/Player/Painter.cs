@@ -63,7 +63,7 @@ public class Painter : MonoBehaviour, IUpgradable
     protected virtual void Awake()
     {
         PaintAmount = _startPaintAmount;
-        CurrentColor = _paintRenderer.material.GetColor(LiquidColor);
+        CurrentColor = _paintRenderer.material.color;
         SetUpgrades();
     }
 
@@ -88,7 +88,7 @@ public class Painter : MonoBehaviour, IUpgradable
     protected void ChangeColor(Color color)
     {
         CurrentColor = color;
-        _paintRenderer.material.SetColor(LiquidColor, CurrentColor);
+        _paintRenderer.material.color = CurrentColor;
 
         ParticleSystem.MainModule mainModule = _paintParticle.main;
         mainModule.startColor = CurrentColor;

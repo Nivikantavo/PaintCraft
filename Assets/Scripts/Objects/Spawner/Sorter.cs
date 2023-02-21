@@ -56,7 +56,7 @@ public class Sorter : MonoBehaviour
     {
         foreach (var storage in _storages)
         {
-            _targetPoint = storage.TryGetFreePoint();
+            storage.TryGetFreePoint(out _targetPoint);
 
             if (_targetPoint != null)
             {
@@ -74,7 +74,6 @@ public class Sorter : MonoBehaviour
 
         for (int i = 0; i < buckets.Length; i++)
         {
-            buckets[i].SetStoragePoint(points[i]);
             points[i].SetBucket(buckets[i]);
 
             StartCoroutine(MoveToPoint(buckets[i], points[i].transform));

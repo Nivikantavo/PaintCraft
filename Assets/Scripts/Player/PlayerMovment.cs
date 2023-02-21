@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Player))]
@@ -20,10 +17,20 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
 
     private const string _playerSpeed = "PlayerSpeed";
 
+    public void SetUpgrades()
+    {
+        _speed = PlayerPrefs.GetFloat(_playerSpeed, _defaultSpeed);
+    }
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         SetUpgrades();
+    }
+
+    private void OnDisable()
+    {
+        Moving = false;
     }
 
     private void Update()
@@ -44,10 +51,5 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
     private void FixedUpdate()
     {
         _rigidbody.MovePosition(_rigidbody.position + _velocity * Time.deltaTime);
-    }
-
-    public void SetUpgrades()
-    {
-        _speed = PlayerPrefs.GetFloat(_playerSpeed, _defaultSpeed);
     }
 }

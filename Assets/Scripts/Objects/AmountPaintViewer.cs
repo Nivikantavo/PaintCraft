@@ -5,12 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Painter))]
 public class AmountPaintViewer : MonoBehaviour
 {
-    [SerializeField] private Renderer _renderer;
-    [SerializeField] private float _minFillingLevel;
-    [SerializeField] private float _maxFillingLevel;
+    [SerializeField] private GameObject _paint;
 
     private Painter _painter;
-    private const string _fill = "Fill";
 
     private void Awake()
     {
@@ -30,9 +27,9 @@ public class AmountPaintViewer : MonoBehaviour
 
     private void OnPaintAmountChanged()
     {
-        float temp = Mathf.InverseLerp(0, _painter.MaxPaintAmount, _painter.PaintAmount);
-        float filling = Mathf.Lerp(_minFillingLevel, _maxFillingLevel, temp);
+        float filling = Mathf.InverseLerp(0, _painter.MaxPaintAmount, _painter.PaintAmount);
+        Mathf.Clamp(filling, 0, 1);
 
-        _renderer.material.SetFloat(_fill, filling);
+        _paint.transform.localScale = new Vector3(1, filling, 1);
     }
 }

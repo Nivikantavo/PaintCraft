@@ -114,7 +114,7 @@ Transform:
   - {fileID: 5883409519913634981}
   - {fileID: 3758423617737376518}
   - {fileID: 5684664855544822613}
-  - {fileID: 6770263462588654688}
+  - {fileID: 4028862107110315046}
   m_Father: {fileID: 7662670615404022151}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -267,6 +267,7 @@ MonoBehaviour:
   _maxPaintAmount: 1
   _fillingStep: 0.01
   _paintRenderer: {fileID: 2917821739330193954}
+  _paint: {fileID: 8013484221437139366}
   _pickUpEffect: {fileID: 9167381942486004406}
   _bucketRenderer: {fileID: 6831131711469087476}
   _capsuleCollider: {fileID: 7916764294511429560}
@@ -293,7 +294,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2caa94f42313dbd4b89ddd060803e299, type: 2}
+  - {fileID: 2100000, guid: 57b7f526b3f915d49a9fb1e283d9f941, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -355,7 +356,7 @@ ParticleSystem:
   lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 3
-  cullingMode: 0
+  cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
@@ -5159,7 +5160,7 @@ GameObject:
   - component: {fileID: 163993775591690896}
   - component: {fileID: 2917821739330193954}
   m_Layer: 0
-  m_Name: Paint
+  m_Name: PaintRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5177,8 +5178,8 @@ Transform:
   m_LocalScale: {x: 0.85, y: 0.5, z: 0.85}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5752656491462287704}
-  m_RootOrder: 3
+  m_Father: {fileID: 4028862107110315046}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &163993775591690896
 MeshFilter:
@@ -5230,6 +5231,38 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8013484221437139366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4028862107110315046}
+  m_Layer: 0
+  m_Name: Paint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4028862107110315046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8013484221437139366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6770263462588654688}
+  m_Father: {fileID: 5752656491462287704}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8564760178999900315
 GameObject:
   m_ObjectHideFlags: 0
