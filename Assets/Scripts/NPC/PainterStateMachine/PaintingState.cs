@@ -65,15 +65,21 @@ public class PaintingState : State
     {
         int randomNumber;
 
-        if (_worker.CurrentRoom.DonePercentage >= 100)
+        if (_worker.CurrentRoom.DonePercentage >= 1)
         {
             if (_worker.ChooseRoom() == false)
             {
                 enabled = false;
+                return;
             }
         }
 
         _currentWalls = _worker.CurrentRoom.GetUnpaitedWalls();
+
+        if(_currentWalls.Count == 0)
+        {
+            return;
+        }
 
         randomNumber = Random.Range(0, _currentWalls.Count);
         _currentWall = _currentWalls[randomNumber];
@@ -84,9 +90,8 @@ public class PaintingState : State
     private void PaintingWalls()
     {
         _agent.SetDestination(_currentWall.PaintigPoint);
-        Debug.DrawLine(_currentWall.transform.position, transform.position, Color.red);
 
-        if (Vector3.Distance(_currentWall.PaintigPoint, transform.position) <= _stoppingDistance + 1)
+        if (Vector3.Distance(_currentWall.PaintigPoint, transform.position) <= _stoppingDistance + 0.5f)
         {
             if (_currentWall.Painted >= 1)
             {
@@ -98,6 +103,14 @@ public class PaintingState : State
                 {
                     FindeUnpaintedWall();
                 }
+            }
+            else
+            {
+                if(ColorComparator.CompareColor(_worker.CurrentColor, _currentWall.Color) == false)
+                {
+                    _worker.TryTakePaint(0, _currentWall.Color);
+                }
+                transform.rotation = Quaternion.Euler(new Vector3(_currentWall.transform.eulerAngles.x, _currentWall.transform.eulerAngles.y + 90, _currentWall.transform.eulerAngles.z));
             }
         }
     }

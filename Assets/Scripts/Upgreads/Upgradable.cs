@@ -1,5 +1,5 @@
+using GameAnalyticsSDK;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(CapsuleCollider))]
 public class Upgradable : MonoBehaviour
@@ -25,7 +25,7 @@ public class Upgradable : MonoBehaviour
     protected virtual void Awake()
     {
         CurrentLevel = PlayerPrefs.GetInt(_parameterName + "Level", 0);
-        _currentParemeter = PlayerPrefs.GetFloat(_parameterName, 0);
+        _currentParemeter = PlayerPrefs.GetFloat(_parameterName, _startParemeter);
     }
 
     public virtual void Upgrade()
@@ -33,11 +33,16 @@ public class Upgradable : MonoBehaviour
         CurrentLevel++;
         _currentParemeter = _startParemeter + (UpgradeStep * CurrentLevel);
         SaveUpgrade(_currentParemeter);
+#if (UNITY_WEBGL && !UNITY_EDITOR)
+        GameAnalytics.NewResourceEvent(GAResourceFlowType.Sink, "gold", Price, "UpgradeStation", _parameterName);
+#endif
     }
 
     private void SaveUpgrade(float parameter)
     {
         PlayerPrefs.SetFloat(_parameterName, parameter);
         PlayerPrefs.SetInt(_parameterName + "Level", CurrentLevel);
+        Debug.Log(_parameterName + " / " + PlayerPrefs.GetFloat(_parameterName));
+        PlayerPrefs.Save();
     }
 }

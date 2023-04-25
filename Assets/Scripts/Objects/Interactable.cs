@@ -18,11 +18,9 @@ public class Interactable : MonoBehaviour
 
     protected virtual void Interact()
     {
-        Debug.Log($"Interact with {gameObject.name}");
     }
 
     protected virtual void StopInteract()
     {
-        Debug.Log($"Stop interact with {gameObject.name}");
     }
 }

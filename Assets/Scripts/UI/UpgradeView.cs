@@ -18,18 +18,15 @@ public class UpgradeView : MonoBehaviour
 
     public event UnityAction<Upgradable> UpgradeButtonClick;
 
-
     private void OnEnable()
     {
         TryLockButton();
         _upgradeButton.onClick.AddListener(OnUpgradeButtonClick);
-        _upgradeButton.onClick.AddListener(TryLockButton);
     }
 
     private void OnDisable()
     {
         _upgradeButton.onClick.RemoveListener(OnUpgradeButtonClick);
-        _upgradeButton.onClick.RemoveListener(TryLockButton);
     }
 
     public void Renderer(Upgradable upgradable)
@@ -39,29 +36,24 @@ public class UpgradeView : MonoBehaviour
         _price.text = upgradable.Price.ToString();
         _currentLevel.text = upgradable.Level.ToString();
 
-        if (_upgradable.Level == _upgradable.MaxLevel)
-        {
-            _upgradeButton.interactable = false;
-        }
-        else
-        {
-            _upgradeButton.interactable = true;
-        }
+        TryLockButton();
     }
 
     private void OnUpgradeButtonClick()
     {
         UpgradeButtonClick?.Invoke(_upgradable);
+        TryLockButton();
     }
 
     private void TryLockButton()
     {
-        if(_upgradable.Level == _upgradable.MaxLevel)
-        {
-            _upgradeButton.interactable = false;
-            _maxLevel.SetActive(true);
-            _priceGroup.SetActive(false);
-            _levelGroup.SetActive(false);
-        }
+        bool needLock = _upgradable.Level == _upgradable.MaxLevel;
+
+        _upgradeButton.interactable = !needLock;
+            
+        _maxLevel.SetActive(needLock);
+        _description.gameObject.SetActive(!needLock);
+        _priceGroup.SetActive(!needLock);
+        _levelGroup.SetActive(!needLock);
     }
 }

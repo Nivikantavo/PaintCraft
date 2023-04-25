@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,17 +6,15 @@ public class BucketSpawner : ObjectPool
 {
     public Color FillColor => _fillColor;
 
-    [SerializeField] private GameObject _backetPrefub;
+    [SerializeField] private GameObject _bucketPrefub;
     [SerializeField] private StoragePoint _spawnPoint;
     [SerializeField] private float _fillingTime;
     [SerializeField] private float _spawnDelay;
     [SerializeField] private Color _fillColor;
     [SerializeField] private ParticleSystem _paintParticles;
-    
     [SerializeField] private Sorter _sorter;
 
     private float _secondsBetweenSpawn;
-
     private float _elapsedTime;
 
     public event UnityAction<PaintBucket> BucketSpawned;
@@ -28,7 +27,7 @@ public class BucketSpawner : ObjectPool
 
     private void Start()
     {
-        Initialize(_backetPrefub);
+        Initialize(_bucketPrefub);
         _secondsBetweenSpawn = _fillingTime + _spawnDelay;
         _elapsedTime = _secondsBetweenSpawn;
     }
@@ -47,20 +46,20 @@ public class BucketSpawner : ObjectPool
         }
     }
 
-    private void SpawnBucket(GameObject backet, Vector3 spawnPoint)
+    private void SpawnBucket(GameObject bucket, Vector3 spawnPoint)
     {
-        PaintBucket paintBacket = backet.GetComponent<PaintBucket>();
+        PaintBucket paintBucket = bucket.GetComponent<PaintBucket>();
 
-        if (_sorter.TryAddBucket(paintBacket))
+        if (_sorter.TryAddBucket(paintBucket))
         {
-            backet.SetActive(true);
-            backet.transform.position = spawnPoint;
+            bucket.SetActive(true);
+            bucket.transform.position = spawnPoint;
 
-            _spawnPoint.SetBucket(paintBacket);
+            _spawnPoint.SetBucket(paintBucket);
 
-            BucketSpawned?.Invoke(paintBacket);
+            BucketSpawned?.Invoke(paintBucket);
 
-            paintBacket.StartFilling(_fillingTime, _fillColor);
+            paintBucket.StartFilling(_fillingTime, _fillColor);
         }
     }
 

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.agava.webutility": "https://github.com/forcepusher/com.agava.webutility.git#2.1.0",
     "com.agava.yandexgames": "file:E:/Resources/Plagins/com.agava.yandexgames-master",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.17.2",
@@ -8,7 +9,6 @@
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.inputsystem": "1.4.2",
     "com.unity.recorder": "3.0.3",
-    "com.unity.render-pipelines.universal": "12.1.7",
     "com.unity.test-framework": "1.1.31",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.6.4",
@@ -44,5 +44,21 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "Game Package Registry by Google",
+      "url": "https://unityregistry-pa.googleapis.com/",
+      "scopes": [
+        "com.google"
+      ]
+    },
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.gameanalytics"
+      ]
+    }
+  ]
 }

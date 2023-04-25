@@ -1,3 +1,4 @@
+using GameAnalyticsSDK;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,19 +12,21 @@ public class ProgressTracker : MonoBehaviour
     [SerializeField] private PlayerWallet _playerWallet;
     [SerializeField] private Boss _boss;
     [SerializeField] private GameObject _endLevelPanel;
+    [SerializeField] private AdStarter _adStarter;
 
     private List<Wall> _walls = new List<Wall>();
     private int _paintedWallsCount;
     private float _delayBeforeEnd = 3f;
+    private bool _rewardAdSuccess;
 
     public event UnityAction AllWallsPainted;
     public event UnityAction LevelEnd;
+    public event UnityAction RewardReceived;
 
     private void Awake()
     {
-        
-
         List<Wall> walls = new List<Wall>();
+        _rewardAdSuccess = false;
 
         foreach (var wallSet in _rooms)
         {
@@ -35,11 +38,9 @@ public class ProgressTracker : MonoBehaviour
         }
     }
 
-
     private void OnEnable()
     {
         MoneyEarnedPerLevel = 0;
-
         foreach (var wall in _walls)
         {
             wall.WallPainted += OnWallPainted;
@@ -47,6 +48,8 @@ public class ProgressTracker : MonoBehaviour
 
         _playerWallet.MoneyCountChanged += OnPlayerMoneyChanged;
         _boss.PlayerAttained += OnLevelEnd;
+        _adStarter.Reward += OnRewardVideoSuccess;
+        _adStarter.AdClose += OnRewardVideoClose;
     }
 
     private void OnDisable()
@@ -58,9 +61,28 @@ public class ProgressTracker : MonoBehaviour
 
         _playerWallet.MoneyCountChanged -= OnPlayerMoneyChanged;
         _boss.PlayerAttained -= OnLevelEnd;
+        _adStarter.Reward -= OnRewardVideoSuccess;
+        _adStarter.AdClose -= OnRewardVideoClose;
     }
 
-    private void OnWallPainted()
+    private void OnRewardVideoSuccess()
+    {
+        _rewardAdSuccess = true;
+    }
+
+    private void OnRewardVideoClose()
+    {
+        if (_rewardAdSuccess)
+        {
+            int rewarded = MoneyEarnedPerLevel * 2;
+            _playerWallet.AddMoney(rewarded);
+            RewardReceived?.Invoke();
+
+            _endLevelPanel.GetComponent<EndLevelPanel>().ViewReward();
+        }
+    }
+
+    private void OnWallPainted(Wall wall)
     {
         _paintedWallsCount++;
 
@@ -79,16 +101,23 @@ public class ProgressTracker : MonoBehaviour
     {
         StartCoroutine(DelayBeforeEnd());
         LevelEnd?.Invoke();
-        Debug.Log("OnLevelEnd");
+        _adStarter.ShowInterstitialAd();
+        #if (UNITY_WEBGL && !UNITY_EDITOR)
+        SetGoldInfo();
+        #endif
     }
 
     private IEnumerator DelayBeforeEnd()
     {
         WaitForSeconds delayTime = new WaitForSeconds(_delayBeforeEnd);
-
         yield return delayTime;
-
         _endLevelPanel.SetActive(true);
     }
 
+    private void SetGoldInfo()
+    {
+        int earnedByWalls = MoneyEarnedPerLevel - _boss.LevelRevard;
+        GameAnalytics.NewResourceEvent(GAResourceFlowType.Source, "gold", earnedByWalls, "earned by walls", "walls rewards");
+        GameAnalytics.NewResourceEvent(GAResourceFlowType.Source, "gold", _boss.LevelRevard, "earned by level complited", "level reward");
+    }
 }

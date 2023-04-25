@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FadeObjects : MonoBehaviour
@@ -18,7 +16,6 @@ public class FadeObjects : MonoBehaviour
         Ray ray = new Ray(position, direction);
         Debug.DrawRay(position, direction);
         hits = Physics.RaycastAll(ray, 500f);
-
         
         foreach (var hit in hits)
         {

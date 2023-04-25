@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -23,5 +21,10 @@ public class PlayerAnimation : MonoBehaviour
         {
             _animator.SetBool(Moving, _playerMovment.Moving);
         }
+    }
+
+    public void Cut()
+    {
+        _animator.SetLayerWeight(1, 1);
     }
 }

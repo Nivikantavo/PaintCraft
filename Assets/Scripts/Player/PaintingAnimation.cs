@@ -43,7 +43,6 @@ public class PaintingAnimation : MonoBehaviour
                 {
                     _offset = new Vector3(0, _rayScan.CurrentWallPainted, 0);
 
-                    _animator.SetLookAtWeight(1);
                     _animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
                     _animator.SetIKPosition(AvatarIKGoal.RightHand, _currentWall.position - _offset);
                 }
@@ -51,7 +50,6 @@ public class PaintingAnimation : MonoBehaviour
             else
             {
                 _animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-                _animator.SetLookAtWeight(0);
             }
         }
     }

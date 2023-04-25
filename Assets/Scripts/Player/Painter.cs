@@ -3,11 +3,12 @@ using UnityEngine.Events;
 
 public class Painter : MonoBehaviour, IUpgradable
 {
-    public float PaintAmount { get; private set; }
+    public float PaintAmount { get; protected set; }
     public Color CurrentColor { get; private set; }
     public float MaxPaintAmount => _maxPaintAmount;
     public float Paint—onsumption => _paint—onsumption;
     public PlayerWallet PlayerWallet => Wallet;
+    public event UnityAction PaintAmountChanged;
 
     [SerializeField] protected float _paint—onsumption;
     [SerializeField] protected float _startPaintAmount;
@@ -20,17 +21,15 @@ public class Painter : MonoBehaviour, IUpgradable
 
     protected const string LiquidColor = "LiquidColor";
 
-    public event UnityAction PaintAmountChanged;
-
     public bool TryTakePaint(float fullnessProcentage, Color color)
     {
-        float fillMultiplier = 0.33f;
+        float fillMultiplier = 0.5f;
 
         if (PaintAmount < _maxPaintAmount || color != CurrentColor)
         {
             PaintAmount += _maxPaintAmount * fillMultiplier * fullnessProcentage;
 
-            Mathf.Clamp(PaintAmount, 0, _maxPaintAmount);
+            PaintAmount = Mathf.Clamp(PaintAmount, 0, _maxPaintAmount);
 
             if (color != CurrentColor)
             {
@@ -62,7 +61,6 @@ public class Painter : MonoBehaviour, IUpgradable
 
     protected virtual void Awake()
     {
-        PaintAmount = _startPaintAmount;
         CurrentColor = _paintRenderer.material.color;
         SetUpgrades();
     }

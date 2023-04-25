@@ -732,10 +732,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _conteiter: {fileID: 915149180}
   _capacity: 40
-  _backetPrefub: {fileID: 6997633946868208445, guid: 9949417a37cde164f9acc87beaf07a59,
+  _bucketPrefub: {fileID: 6997633946868208445, guid: 9949417a37cde164f9acc87beaf07a59,
     type: 3}
   _spawnPoint: {fileID: 1889325759}
-  _fillingTime: 3
+  _fillingTime: 2
   _spawnDelay: 1
   _fillColor: {r: 0, g: 0, b: 0, a: 0}
   _paintParticles: {fileID: 3186330878177556322}

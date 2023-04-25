@@ -1,4 +1,5 @@
 using System.Collections;
+using GameAnalyticsSDK;
 using TMPro;
 using UnityEngine;
 
@@ -52,6 +53,9 @@ public class BuyArea : MonoBehaviour
             }
 
             PlayerPrefs.SetInt(_areaName, _paid);
+            #if (UNITY_WEBGL && !UNITY_EDITOR)
+            GameAnalytics.NewResourceEvent(GAResourceFlowType.Sink, "gold", _paid, "buyArea", "Open " + _purchasedObject.name);
+            #endif
         }
     }
 

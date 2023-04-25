@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Room : MonoBehaviour
 {
     public Color Color => _roomColor;
@@ -14,6 +14,8 @@ public class Room : MonoBehaviour
     private int _wallsPaintedCount;
 
     public event UnityAction<Room> PaintedComplited;
+    public event UnityAction DonePercentageChanged;
+    public event UnityAction<Room> PlayerEnterRoom;
 
     public List<Wall> GetUnpaitedWalls()
     {
@@ -40,6 +42,14 @@ public class Room : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent<Player>(out Player player))
+        {
+            PlayerEnterRoom?.Invoke(this);
+        }
+    }
+
     private void SetWallsColor()
     {
         foreach(var wall in _walls)
@@ -48,11 +58,12 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void CalculateDonePercentage()
+    private void CalculateDonePercentage(Wall wall)
     {
         _wallsPaintedCount++;
-        DonePercentage = (float)_wallsPaintedCount / (float)_walls.Count * 100;
-        if(DonePercentage == 100)
+        DonePercentage = (float)_wallsPaintedCount / (float)_walls.Count;
+        DonePercentageChanged?.Invoke();
+        if(DonePercentage == 1)
         {
             PaintedComplited?.Invoke(this);
         }

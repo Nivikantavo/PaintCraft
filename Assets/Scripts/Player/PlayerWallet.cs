@@ -9,6 +9,12 @@ public class PlayerWallet : MonoBehaviour
 
     private const string _moneyCount = "MoneyCount";
 
+    private void Awake()
+    {
+        Money = PlayerPrefs.GetInt(_moneyCount);
+        AddMoney(10000);
+    }
+
     public void AddMoney(int money)
     {
         if (money > 0)
@@ -16,6 +22,7 @@ public class PlayerWallet : MonoBehaviour
             Money += money;
             MoneyCountChanged?.Invoke(money);
         }
+        Save();
     }
 
     public bool SpendMoney(int price)
@@ -24,6 +31,7 @@ public class PlayerWallet : MonoBehaviour
         {
             Money -= price;
             MoneyCountChanged?.Invoke(-price);
+            Save();
             return true;
         }
         else
@@ -34,13 +42,17 @@ public class PlayerWallet : MonoBehaviour
 
     private void OnEnable()
     {
-        Money = PlayerPrefs.GetInt(_moneyCount);
         MoneyCountChanged?.Invoke(Money);
-        AddMoney(10000);
     }
 
     private void OnDisable()
     {
+        Save();
+    }
+
+    private void Save()
+    {
         PlayerPrefs.SetInt(_moneyCount, Money);
+        PlayerPrefs.Save();
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,7 +22,7 @@ public class ObjectPool : MonoBehaviour
 
     protected bool TryGetObject(out GameObject result)
     {
-        result = _pool.First(p => p.activeSelf == false);
+        result = _pool.FirstOrDefault(p => p.activeSelf == false);
 
         return result != null;
     }

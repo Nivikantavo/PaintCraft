@@ -11,7 +11,6 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
 
     private Rigidbody _rigidbody;
     private float _speed;
-
     private Vector3 _input;
     private Vector3 _velocity;
 
@@ -36,6 +35,12 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
     private void Update()
     {
         _input = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
+
+        if(_input == Vector3.zero)
+        {
+            _input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        }
+
         _velocity = _input.normalized * _speed;
 
         if (_input != Vector3.zero)
@@ -50,6 +55,6 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
     }
     private void FixedUpdate()
     {
-        _rigidbody.MovePosition(_rigidbody.position + _velocity * Time.deltaTime);
+        _rigidbody.AddForce(_velocity * _speed);
     }
 }

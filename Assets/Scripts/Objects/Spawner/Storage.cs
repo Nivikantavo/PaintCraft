@@ -10,7 +10,6 @@ public class Storage : MonoBehaviour
     [SerializeField] private Color _color;
 
     private StoragePoint[,] _storagePoints = new StoragePoint[3, 3];
-    
 
     private void Awake()
     {
@@ -34,7 +33,7 @@ public class Storage : MonoBehaviour
         return positions;
     }
 
-    public void TryGetFreePoint(out StoragePoint storagePoint)
+    public bool TryGetFreePoint(out StoragePoint storagePoint)
     {
         storagePoint = null;
         for (int i = 0; i < _storagePoints.GetLength(0); i++)
@@ -47,6 +46,7 @@ public class Storage : MonoBehaviour
                 }
             }
         }
+        return storagePoint != null;
     }
 
     public StoragePoint[] GetPointsRow(int rowNumber)
@@ -65,7 +65,6 @@ public class Storage : MonoBehaviour
                 freePointsNumber++;
             }
         }
-
         return freePointsNumber;
     }
 

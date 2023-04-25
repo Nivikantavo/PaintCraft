@@ -27,11 +27,13 @@ public class Wall : Interactable, IUpgradable
 
     private const string _paintingReward = "Reward";
 
-    public event UnityAction WallPainted;
+    public event UnityAction<Wall> WallPainted;
 
     public void SetUpgrades()
     {
-        _reward = PlayerPrefs.GetInt(_paintingReward, _defaultReward);
+        Debug.Log("GetInt: " + PlayerPrefs.GetInt(_paintingReward));
+        _reward = (int)PlayerPrefs.GetFloat(_paintingReward, _defaultReward);
+        Debug.Log("reward: " + _reward);
     }
 
     public void SetColor(Color color)
@@ -86,7 +88,7 @@ public class Wall : Interactable, IUpgradable
             if (_painted >= 1)
             {
                 _stripe.enabled = false;
-                WallPainted?.Invoke();
+                WallPainted?.Invoke(this);
                 _coinEffect.Play();
                 Painter.PlayerWallet.AddMoney(_reward);
             }

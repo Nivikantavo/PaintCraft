@@ -5,12 +5,10 @@ public class State : MonoBehaviour
 {
     [SerializeField] private List<Transition> _transitions;
 
-
     public void Enter()
     {
         if(enabled == false)
         {
-
             enabled = true;
             foreach(var transition in _transitions)
             {

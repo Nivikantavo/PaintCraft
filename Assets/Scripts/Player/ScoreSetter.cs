@@ -1,0 +1,78 @@
+using Agava.YandexGames;
+using System.Collections;
+using UnityEngine;
+
+public class ScoreSetter : MonoBehaviour
+{
+    [SerializeField] private PlayerWallet _wallet;
+    [SerializeField] private ProgressTracker _progressTracker;
+
+    private LeaderboardEntryResponse _playerEntry = null;
+    private int _currentScore;
+    private const string _totalEarned = "TotalEarned";
+
+#if (UNITY_WEBGL && !UNITY_EDITOR)
+    private IEnumerator Start()
+    {
+        _currentScore = 0;
+
+        if (YandexGamesSdk.IsInitialized == false)
+        {
+            yield return YandexGamesSdk.Initialize();
+        }
+        if (PlayerAccount.IsAuthorized)
+        {
+            Leaderboard.GetPlayerEntry(_totalEarned, OnGetPlayerEntrySuccess);
+        }
+    }
+
+    private void OnEnable()
+    {
+        _wallet.MoneyCountChanged += OnMoneyCountChange;
+        _progressTracker.LevelEnd += OnLevelEnd;
+        _progressTracker.RewardReceived += OnLevelEnd;
+    }
+
+    private void OnDisable()
+    {
+        _wallet.MoneyCountChanged -= OnMoneyCountChange;
+        _progressTracker.LevelEnd -= OnLevelEnd;
+        _progressTracker.RewardReceived -= OnLevelEnd;
+    }
+
+    private void OnLevelEnd()
+    {
+        if (_playerEntry.score < _currentScore)
+        {
+            SetNewScore();
+        }
+    }
+
+    private void OnMoneyCountChange(int difference)
+    {
+        if(difference > 0)
+        {
+            _currentScore += difference;
+        }
+    }
+
+    private void OnGetPlayerEntrySuccess(LeaderboardEntryResponse playerEntry)
+    {
+        if(playerEntry == null)
+        {
+            Leaderboard.SetScore(_totalEarned, _currentScore);
+        }
+        else
+        {
+            _playerEntry = playerEntry;
+        }
+        _currentScore = _playerEntry.score;
+    }
+
+    private void SetNewScore()
+    {
+        Leaderboard.SetScore(_totalEarned, _currentScore);
+        Leaderboard.GetPlayerEntry(_totalEarned, OnGetPlayerEntrySuccess);
+    }
+#endif
+}

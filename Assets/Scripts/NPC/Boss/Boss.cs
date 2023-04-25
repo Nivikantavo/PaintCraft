@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class Boss : MonoBehaviour
 {
+    public int LevelRevard => _levelRevard;
+
     [SerializeField] private Player _player;
     [SerializeField] private ProgressTracker _progressTracker;
     [SerializeField] private NavMeshAgent _agent;
@@ -64,7 +64,6 @@ public class Boss : MonoBehaviour
     {
         _player.PlayerWallet.AddMoney(_levelRevard);
         PlayerAttained?.Invoke();
-        Debug.Log("PlayerAttained");
         enabled = false;
     }
 }

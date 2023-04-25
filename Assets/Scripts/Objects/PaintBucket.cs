@@ -16,6 +16,9 @@ public class PaintBucket : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private Color _paintColor;
 
+    private Coroutine _filling;
+    private Coroutine _moving;
+
     private float _timeFillingStep;
     private float _currentPaintAmount = 0;
 
@@ -25,7 +28,13 @@ public class PaintBucket : MonoBehaviour
     public void StartFilling(float fillingTime, Color color)
     {
         SetColor(color);
-        StartCoroutine(FillBucket(fillingTime));
+        _filling = StartCoroutine(FillBucket(fillingTime));
+    }
+
+    public void StartMoving(Transform targetPoint)
+    {
+        if(this.enabled)
+            _filling = StartCoroutine(MoveToPoint(targetPoint));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,6 +51,18 @@ public class PaintBucket : MonoBehaviour
     private void OnEnable()
     {
         Initialize();
+    }
+
+    private void OnDisable()
+    {
+        if(_filling != null)
+        {
+            StopCoroutine(_filling);
+        }
+        if (_moving != null)
+        {
+            StopCoroutine(_moving);
+        }
     }
 
     private void Collected()
@@ -75,6 +96,19 @@ public class PaintBucket : MonoBehaviour
             yield return StepBetweenLifts;
         }
         BucketFulled?.Invoke();
+    }
+
+    private IEnumerator MoveToPoint(Transform point)
+    {
+        Vector3 startBucketPosition = transform.position;
+        float movingProgress = 0;
+
+        while (transform.position != point.position)
+        {
+            transform.position = Vector3.Lerp(startBucketPosition, point.position, movingProgress);
+            movingProgress += Time.deltaTime;
+            yield return Time.deltaTime;
+        }
     }
 
     private void OnParticleSystemStopped()

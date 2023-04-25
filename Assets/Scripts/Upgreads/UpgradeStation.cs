@@ -21,7 +21,6 @@ public class UpgradeStation : MonoBehaviour
             _player = player;
             _upgradPanel.Initialize(this);
             _upgradPanel.gameObject.SetActive(true);
-            
         }
     }
 

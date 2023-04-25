@@ -1,3 +1,4 @@
+using GameAnalyticsSDK;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,21 +13,23 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadHub()
     {
-        StartCoroutine(LoadSceneWithDelay(0));
+        StartCoroutine(LoadSceneWithDelay(1));
     }
 
     public void LoadNextLevel()
     {
-        int nextSceneIndex = PlayerPrefs.GetInt(_playerProgress, 0) + 1;
-        Debug.Log(PlayerPrefs.GetInt(_playerProgress));
+        int nextSceneIndex = PlayerPrefs.GetInt(_playerProgress, 0) + 2;
 
         if(SceneManager.sceneCountInBuildSettings > nextSceneIndex)
         {
             StartCoroutine(LoadSceneWithDelay(nextSceneIndex));
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, nextSceneIndex.ToString());
         }
         else
         {
-            Debug.LogError("Next scene did`t exist");
+            nextSceneIndex = Random.Range(SceneManager.sceneCountInBuildSettings - 5, SceneManager.sceneCountInBuildSettings - 1);
+            //nextSceneIndex = SceneManager.sceneCountInBuildSettings - 1;
+            StartCoroutine(LoadSceneWithDelay(nextSceneIndex));
         }
     }
 
@@ -48,10 +51,16 @@ public class LevelLoader : MonoBehaviour
 
     private void SaveProgress()
     {
-        int currentLevelNumber = SceneManager.GetActiveScene().buildIndex;
+        int currentLevelNumber = SceneManager.GetActiveScene().buildIndex - 1;
 
-        PlayerPrefs.SetInt(_playerProgress, currentLevelNumber);
-        Debug.Log("save progress: "+ currentLevelNumber);
+        if(currentLevelNumber >= PlayerPrefs.GetInt(_playerProgress, 0))
+        {
+            PlayerPrefs.SetInt(_playerProgress, currentLevelNumber);
+            PlayerPrefs.Save();
+        }
+#if (UNITY_WEBGL && !UNITY_EDITOR)
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevelNumber.ToString());
+#endif
     }
 
     private IEnumerator LoadSceneWithDelay(int sceneNumber)

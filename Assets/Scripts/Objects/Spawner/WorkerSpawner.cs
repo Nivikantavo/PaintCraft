@@ -16,7 +16,6 @@ public class WorkerSpawner : MonoBehaviour
     private void Awake()
     {
         int workersCount = PlayerPrefs.GetInt(_workersCount, 0);
-        Debug.Log(PlayerPrefs.GetInt(_workersCount));
 
         for (int i = 0; i < workersCount; i++)
         {
@@ -25,7 +24,7 @@ public class WorkerSpawner : MonoBehaviour
             worker.Initialize(_playerWallet, _rooms, _storages);
             if(worker.TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
             {
-                agent.avoidancePriority = i;
+                agent.avoidancePriority = i + 1;
             }
         }
     }

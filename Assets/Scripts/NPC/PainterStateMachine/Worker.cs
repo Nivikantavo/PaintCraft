@@ -27,7 +27,6 @@ public class Worker : Painter
 
             CurrentRoom = _rooms[randomNumber];
             this.TryTakePaint(0, CurrentRoom.Color);
-
             return true;
         }
         else
@@ -43,6 +42,8 @@ public class Worker : Painter
         _agent = GetComponent<NavMeshAgent>();
         _findingPaintState = GetComponent<FindingPaintState>();
         base.Awake();
+        _startPaintAmount = _maxPaintAmount / 2;
+        PaintAmount = _startPaintAmount;
     }
 
     protected override void OnDisable()

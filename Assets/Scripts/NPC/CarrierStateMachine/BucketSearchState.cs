@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,7 +24,7 @@ public class BucketSearchState : MonoBehaviour
         {
             foreach(var room in _rooms)
             {
-                if(room.DonePercentage < 100)
+                if(room.DonePercentage < 1)
                 {
                     //_currentRoomStorage = room.Storage;
                 }
@@ -46,9 +44,6 @@ public class BucketSearchState : MonoBehaviour
             {
             }
         }
-
-        
-        
         //Взять свободные ведра
         //отнести к выбранному хранилищу
     }

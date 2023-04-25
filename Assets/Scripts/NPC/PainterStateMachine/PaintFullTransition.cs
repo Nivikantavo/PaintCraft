@@ -12,7 +12,7 @@ public class PaintFullTransition : Transition
 
     private void Update()
     {
-        if(_painter.PaintAmount >= _painter.MaxPaintAmount / 2)
+        if(_painter.PaintAmount >= _painter.MaxPaintAmount)
         {
             NeedTransit = true;
         }

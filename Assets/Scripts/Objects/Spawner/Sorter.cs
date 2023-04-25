@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -56,9 +54,7 @@ public class Sorter : MonoBehaviour
     {
         foreach (var storage in _storages)
         {
-            storage.TryGetFreePoint(out _targetPoint);
-
-            if (_targetPoint != null)
+            if (storage.TryGetFreePoint(out _targetPoint))
             {
                 _curretntStorage = storage;
                 return true;
@@ -74,27 +70,16 @@ public class Sorter : MonoBehaviour
 
         for (int i = 0; i < buckets.Length; i++)
         {
-            points[i].SetBucket(buckets[i]);
-
-            StartCoroutine(MoveToPoint(buckets[i], points[i].transform));
+            if(buckets[i].enabled == true)
+            {
+                points[i].SetBucket(buckets[i]);
+                buckets[i].StartMoving(points[i].transform);
+            }
         }
     }
 
     public bool TryAddBucket(PaintBucket bucket)
     {
         return TryFindFreePoint();
-    }
-
-    private IEnumerator MoveToPoint(PaintBucket backet, Transform point)
-    {
-        Vector3 startBacketPosition = backet.transform.position;
-        float movingProgress = 0;
-
-        while (backet.transform.position != point.position)
-        {
-            backet.transform.position = Vector3.Lerp(startBacketPosition, point.position, movingProgress);
-            movingProgress += Time.deltaTime;
-            yield return Time.deltaTime;
-        }
     }
 }
