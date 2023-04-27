@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class ScoreSetter : MonoBehaviour
 {
+    private const string TotalEarned = "TotalEarned";
+
     [SerializeField] private PlayerWallet _wallet;
     [SerializeField] private ProgressTracker _progressTracker;
 
     private LeaderboardEntryResponse _playerEntry = null;
     private int _currentScore;
-    private const string _totalEarned = "TotalEarned";
 
 #if (UNITY_WEBGL && !UNITY_EDITOR)
     private IEnumerator Start()
@@ -22,7 +23,7 @@ public class ScoreSetter : MonoBehaviour
         }
         if (PlayerAccount.IsAuthorized)
         {
-            Leaderboard.GetPlayerEntry(_totalEarned, OnGetPlayerEntrySuccess);
+            Leaderboard.GetPlayerEntry(TotalEarned, OnGetPlayerEntrySuccess);
         }
     }
 
@@ -60,7 +61,7 @@ public class ScoreSetter : MonoBehaviour
     {
         if(playerEntry == null)
         {
-            Leaderboard.SetScore(_totalEarned, _currentScore);
+            Leaderboard.SetScore(TotalEarned, _currentScore);
         }
         else
         {
@@ -71,8 +72,8 @@ public class ScoreSetter : MonoBehaviour
 
     private void SetNewScore()
     {
-        Leaderboard.SetScore(_totalEarned, _currentScore);
-        Leaderboard.GetPlayerEntry(_totalEarned, OnGetPlayerEntrySuccess);
+        Leaderboard.SetScore(TotalEarned, _currentScore);
+        Leaderboard.GetPlayerEntry(TotalEarned, OnGetPlayerEntrySuccess);
     }
 #endif
 }

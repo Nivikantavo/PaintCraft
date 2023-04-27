@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PlayerMovment : MonoBehaviour, IUpgradable
 {
-    public bool Moving { get; private set; }
+    private const string PlayerSpeed = "PlayerSpeed";
 
     [SerializeField] private Joystick _joystick;
     [SerializeField] private float _defaultSpeed;
@@ -14,12 +14,7 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
     private Vector3 _input;
     private Vector3 _velocity;
 
-    private const string _playerSpeed = "PlayerSpeed";
-
-    public void SetUpgrades()
-    {
-        _speed = PlayerPrefs.GetFloat(_playerSpeed, _defaultSpeed);
-    }
+    public bool Moving { get; private set; }
 
     private void Awake()
     {
@@ -53,8 +48,14 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
             Moving = false;
         }
     }
+
     private void FixedUpdate()
     {
         _rigidbody.AddForce(_velocity * _speed);
+    }
+
+    public void SetUpgrades()
+    {
+        _speed = PlayerPrefs.GetFloat(PlayerSpeed, _defaultSpeed);
     }
 }

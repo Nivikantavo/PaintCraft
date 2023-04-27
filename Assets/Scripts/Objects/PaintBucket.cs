@@ -4,8 +4,6 @@ using UnityEngine.Events;
 
 public class PaintBucket : MonoBehaviour
 {
-    public Color PaintColor => _paintColor;
-
     [SerializeField] private float _maxPaintAmount;
     [SerializeField] private float _fillingStep;
     [SerializeField] private Renderer _paintRenderer;
@@ -21,21 +19,13 @@ public class PaintBucket : MonoBehaviour
 
     private float _timeFillingStep;
     private float _currentPaintAmount = 0;
+    private float _minScale = 0;
+    private float _maxScale = 1;
+
+    public Color PaintColor => _paintColor;
 
     public event UnityAction BucketFulled;
     public event UnityAction BucketCollected;
-
-    public void StartFilling(float fillingTime, Color color)
-    {
-        SetColor(color);
-        _filling = StartCoroutine(FillBucket(fillingTime));
-    }
-
-    public void StartMoving(Transform targetPoint)
-    {
-        if(this.enabled)
-            _filling = StartCoroutine(MoveToPoint(targetPoint));
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,6 +55,23 @@ public class PaintBucket : MonoBehaviour
         }
     }
 
+    private void OnParticleSystemStopped()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void StartFilling(float fillingTime, Color color)
+    {
+        SetColor(color);
+        _filling = StartCoroutine(FillBucket(fillingTime));
+    }
+
+    public void StartMoving(Transform targetPoint)
+    {
+        if (gameObject.activeInHierarchy)
+            _filling = StartCoroutine(MoveToPoint(targetPoint));
+    }
+
     private void Collected()
     {
         BucketCollected?.Invoke();
@@ -79,7 +86,7 @@ public class PaintBucket : MonoBehaviour
         _bucketRenderer.SetActive(true);
         _capsuleCollider.enabled = true;
         _currentPaintAmount = 0;
-        _paint.transform.localScale = new Vector3(1, 0, 1);
+        _paint.transform.localScale = new Vector3(_maxScale, _minScale, _maxScale);
     }
 
     private IEnumerator FillBucket(float fillingTime)
@@ -91,7 +98,7 @@ public class PaintBucket : MonoBehaviour
         {
             _currentPaintAmount += _fillingStep;
             _currentPaintAmount = Mathf.Clamp(_currentPaintAmount, 0, _maxPaintAmount);
-            _paint.transform.localScale = new Vector3(1, _currentPaintAmount, 1);
+            _paint.transform.localScale = new Vector3(_maxScale, _currentPaintAmount, _maxScale);
 
             yield return StepBetweenLifts;
         }
@@ -109,11 +116,6 @@ public class PaintBucket : MonoBehaviour
             movingProgress += Time.deltaTime;
             yield return Time.deltaTime;
         }
-    }
-
-    private void OnParticleSystemStopped()
-    {
-        gameObject.SetActive(false);
     }
 
     private void SetColor(Color color)

@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class UpgradeStation : MonoBehaviour
 {
-    public IReadOnlyList<Upgradable> Upgradables => _upgradebles;
-    public string Label => _label;
-    public Sprite Image => _image;
-
     [SerializeField] private List<Upgradable> _upgradebles;
     [SerializeField] private UpgradePanel _upgradPanel;
     [SerializeField] private string _label;
     [SerializeField] private Sprite _image;
 
     private Player _player;
+
+    public IReadOnlyList<Upgradable> Upgradables => _upgradebles;
+    public string Label => _label;
+    public Sprite Image => _image;
 
     private void OnTriggerEnter(Collider other)
     {

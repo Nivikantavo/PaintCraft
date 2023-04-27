@@ -5,10 +5,12 @@ using UnityEngine.Events;
 
 public class AdStarter : MonoBehaviour
 {
+    [SerializeField] private int _rewardMultiplayer;
+
+    public int RewardMultiplayer => _rewardMultiplayer;
+
     public event UnityAction Reward;
     public event UnityAction AdClose;
-    public int RewardMultiplayer => _rewardMultiplayer;
-    [SerializeField] private int _rewardMultiplayer;
 
     private void Awake()
     {
@@ -28,7 +30,6 @@ public class AdStarter : MonoBehaviour
 #if (UNITY_WEBGL && !UNITY_EDITOR)
         InterstitialAd.Show();
 #endif
-
     }
 
     public void ShowVideoAd()
@@ -36,7 +37,6 @@ public class AdStarter : MonoBehaviour
 #if (UNITY_WEBGL && !UNITY_EDITOR)
         VideoAd.Show(null, RewardPlayer, OnAdClose, null);
 #endif
-
     }
 
     private void RewardPlayer()

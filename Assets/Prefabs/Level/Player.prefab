@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2f7631e462dd6478b54a6d34dbc366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "_paint\u0421onsumption": 1
+  _paintCost: 1
   _startPaintAmount: 0
   _rayScan: {fileID: 465543906004505382}
   _paintParticle: {fileID: 7048761688602060966}

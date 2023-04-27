@@ -4,13 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider))]
 public class Upgradable : MonoBehaviour
 {
-    public int Price => _startPrice + CurrentLevel * _priceStep;
-    public int MaxLevel => _maxLevel;
-    public int Level => CurrentLevel;
-    public string ParameterName => _parameterName;
-    public string Label => _lable;
-    public float StartParameter => _startParemeter;
-    
     [SerializeField] protected float UpgradeStep;
     [SerializeField] private int _maxLevel;
     [SerializeField] private int _startPrice;
@@ -21,6 +14,13 @@ public class Upgradable : MonoBehaviour
 
     protected int CurrentLevel;
     private float _currentParemeter;
+
+    public int Price => _startPrice + CurrentLevel * _priceStep;
+    public int MaxLevel => _maxLevel;
+    public int Level => CurrentLevel;
+    public string ParameterName => _parameterName;
+    public string Label => _lable;
+    public float StartParameter => _startParemeter;
 
     protected virtual void Awake()
     {

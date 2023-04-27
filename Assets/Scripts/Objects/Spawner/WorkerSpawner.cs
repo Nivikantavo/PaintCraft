@@ -11,11 +11,11 @@ public class WorkerSpawner : MonoBehaviour
     [SerializeField] private List<Storage> _storages;
     [SerializeField] private PlayerWallet _playerWallet;
 
-    private const string _workersCount = "WorkersCount";
+    private const string WorkersCount = "WorkersCount";
 
     private void Awake()
     {
-        int workersCount = PlayerPrefs.GetInt(_workersCount, 0);
+        int workersCount = PlayerPrefs.GetInt(WorkersCount, 0);
 
         for (int i = 0; i < workersCount; i++)
         {

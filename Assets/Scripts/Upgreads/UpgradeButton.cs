@@ -8,7 +8,6 @@ public class UpgradeButton : MonoBehaviour
 
     public void Rerenderer(Upgradable upgradable)
     {
-        Debug.Log(upgradable.ParameterName + ": " + upgradable.Level.ToString());
         _level.text = upgradable.Level.ToString();
         _price.text = upgradable.Price.ToString();
     }

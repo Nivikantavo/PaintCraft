@@ -4,14 +4,14 @@ using UnityEngine.Events;
 
 public class Sorter : MonoBehaviour
 {
-    public bool HasFreePoint => TryFindFreePoint();
-
     [SerializeField] private Storage[] _storages;
     [SerializeField] private BucketSpawner _spawner;
 
     private PaintBucket _currentBucket;
     private StoragePoint _targetPoint;
     private Storage _curretntStorage;
+
+    public bool HasFreePoint => TryFindFreePoint();
 
     public event UnityAction SpawnPointFreed;
 

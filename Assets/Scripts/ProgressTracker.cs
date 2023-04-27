@@ -6,8 +6,6 @@ using UnityEngine.Events;
 
 public class ProgressTracker : MonoBehaviour
 {
-    public int MoneyEarnedPerLevel { get; private set; }
-
     [SerializeField] private List<GameObject> _rooms;
     [SerializeField] private PlayerWallet _playerWallet;
     [SerializeField] private Boss _boss;
@@ -18,6 +16,8 @@ public class ProgressTracker : MonoBehaviour
     private int _paintedWallsCount;
     private float _delayBeforeEnd = 3f;
     private bool _rewardAdSuccess;
+
+    public int MoneyEarnedPerLevel { get; private set; }
 
     public event UnityAction AllWallsPainted;
     public event UnityAction LevelEnd;
@@ -74,7 +74,7 @@ public class ProgressTracker : MonoBehaviour
     {
         if (_rewardAdSuccess)
         {
-            int rewarded = MoneyEarnedPerLevel * 2;
+            int rewarded = MoneyEarnedPerLevel * _adStarter.RewardMultiplayer - MoneyEarnedPerLevel;
             _playerWallet.AddMoney(rewarded);
             RewardReceived?.Invoke();
 

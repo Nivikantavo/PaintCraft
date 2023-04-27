@@ -13,11 +13,6 @@ public class FindingPaintState : State
     private Storage _currentStorage;
     private CapsuleCollider _collider;
 
-    public void Initialize(List<Storage> storages)
-    {
-        _storages = storages;
-    }
-
     private void Awake()
     {
         _worker = GetComponent<Worker>();
@@ -50,6 +45,11 @@ public class FindingPaintState : State
         {
             _currentStorage = FindStorage();
         }
+    }
+
+    public void Initialize(List<Storage> storages)
+    {
+        _storages = storages;
     }
 
     private Storage FindStorage()

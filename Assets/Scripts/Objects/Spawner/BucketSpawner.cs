@@ -1,11 +1,8 @@
-using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class BucketSpawner : ObjectPool
 {
-    public Color FillColor => _fillColor;
-
     [SerializeField] private GameObject _bucketPrefub;
     [SerializeField] private StoragePoint _spawnPoint;
     [SerializeField] private float _fillingTime;
@@ -16,6 +13,8 @@ public class BucketSpawner : ObjectPool
 
     private float _secondsBetweenSpawn;
     private float _elapsedTime;
+
+    public Color FillColor => _fillColor;
 
     public event UnityAction<PaintBucket> BucketSpawned;
 

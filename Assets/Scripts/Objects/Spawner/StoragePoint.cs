@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class StoragePoint : MonoBehaviour
 {
+    private PaintBucket _bucket;
+
     public int Row { get; private set; }
     public int Column { get; private set; }
     public bool IsFree
@@ -16,7 +18,13 @@ public class StoragePoint : MonoBehaviour
         }
     }
 
-    private PaintBucket _bucket;
+    private void OnDisable()
+    {
+        if (_bucket != null)
+        {
+            _bucket.BucketCollected -= OnBucketCollected;
+        }
+    }
 
     public void SetRow(int row)
     {
@@ -50,13 +58,5 @@ public class StoragePoint : MonoBehaviour
     {
         _bucket.BucketCollected -= OnBucketCollected;
         _bucket = null;
-    }
-
-    private void OnDisable()
-    {
-        if(_bucket != null)
-        {
-            _bucket.BucketCollected -= OnBucketCollected;
-        }
     }
 }

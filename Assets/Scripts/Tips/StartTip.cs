@@ -6,20 +6,20 @@ using DeviceType = Agava.YandexGames.DeviceType;
 
 public class StartTip : MonoBehaviour
 {
+    private const string PlayerProgress = "PlayerProgress";
+    private const string GiveTip = "GiveTip";
+
     [SerializeField] private Image _cursorImage;
     [SerializeField] private Animator _animator;
     [SerializeField] private Sprite _WASD;
     [SerializeField] private Sprite _hand;
-
-    private const string _playerProgress = "PlayerProgress";
-    private const string _giveTip = "GiveTip";
 
     private bool _stopped = false;
 
     private void Awake()
     {
         _cursorImage.enabled = false;
-        int nextSceneIndex = PlayerPrefs.GetInt(_playerProgress, 0) + 1;
+        int nextSceneIndex = PlayerPrefs.GetInt(PlayerProgress, 0) + 1;
 
         _cursorImage.sprite = _hand;
 
@@ -57,13 +57,13 @@ public class StartTip : MonoBehaviour
     private void GiveAdvice()
     {
         _cursorImage.enabled = true;
-        _animator.SetBool(_giveTip, true);
+        _animator.SetBool(GiveTip, true);
     }
 
     private void StopAdvice()
     {
         _cursorImage.enabled = false;
-        _animator.SetBool(_giveTip, false);
+        _animator.SetBool(GiveTip, false);
         _stopped = true;
     }
 }

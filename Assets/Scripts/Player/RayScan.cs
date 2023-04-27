@@ -6,6 +6,16 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Painter))]
 public class RayScan : MonoBehaviour
 {
+    [SerializeField] private int _rays;
+    [SerializeField] private float _maxDistance;
+    [SerializeField] private float _angle;
+    [SerializeField] private Vector3 _offset;
+    [Range(0, 0.99f)] [SerializeField] private float _distanceMultiplier;
+
+    private Wall _currentWall;
+    private List<Wall> _detectedWalls;
+    private Painter _painter;
+
     public float CurrentWallPainted
     {
         get
@@ -18,16 +28,6 @@ public class RayScan : MonoBehaviour
         }
     }
 
-    [SerializeField] private int _rays;
-    [SerializeField] private float _maxDistance;
-    [SerializeField] private float _angle;
-    [SerializeField] private Vector3 _offset;
-    [Range(0, 0.99f)] [SerializeField] private float _distanceMultiplier;
-
-    private Wall _currentWall;
-    private List<Wall> _detectedWalls;
-    private Painter _painter;
-
     public event UnityAction<Wall> WallSelected;
     public event UnityAction WallDeselected;
 
@@ -38,7 +38,7 @@ public class RayScan : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_painter.PaintAmount >= _painter.PaintÑonsumption)
+        if (_painter.PaintAmount >= _painter.PaintCost)
         {
             _detectedWalls = RayToScan();
 

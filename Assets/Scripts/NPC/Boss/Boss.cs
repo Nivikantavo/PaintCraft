@@ -4,8 +4,6 @@ using UnityEngine.Events;
 
 public class Boss : MonoBehaviour
 {
-    public int LevelRevard => _levelRevard;
-
     [SerializeField] private Player _player;
     [SerializeField] private ProgressTracker _progressTracker;
     [SerializeField] private NavMeshAgent _agent;
@@ -14,6 +12,8 @@ public class Boss : MonoBehaviour
 
     private Transform _playerTransform;
     private bool _workDone;
+
+    public int LevelRevard => _levelRevard;
 
     public event UnityAction MovmentStarted;
     public event UnityAction PlayerAttained;

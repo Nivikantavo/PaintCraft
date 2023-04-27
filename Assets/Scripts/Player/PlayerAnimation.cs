@@ -4,10 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovment))]
 public class PlayerAnimation : MonoBehaviour
 {
+    private const string Moving = "Moving";
+
     private Animator _animator;
     private PlayerMovment _playerMovment;
-
-    private const string Moving = "Moving";
 
     private void Awake()
     {

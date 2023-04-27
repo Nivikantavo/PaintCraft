@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class BossAnimation : MonoBehaviour
 {
-    [SerializeField] private Boss _boss;
-    [SerializeField] private Animator _animator;
-
     private const string Move = "Move";
     private const string GiveRevard = "GiveRevard";
+
+    [SerializeField] private Boss _boss;
+    [SerializeField] private Animator _animator;
 
     private void OnEnable()
     {

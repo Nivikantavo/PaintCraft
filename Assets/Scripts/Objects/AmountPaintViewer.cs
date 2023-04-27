@@ -7,6 +7,9 @@ public class AmountPaintViewer : MonoBehaviour
 
     private Painter _painter;
 
+    private float _maxScale = 1;
+    private float _minScale = 0;
+
     private void Awake()
     {
         _painter = gameObject.GetComponent<Painter>();
@@ -25,14 +28,14 @@ public class AmountPaintViewer : MonoBehaviour
 
     private void OnPaintAmountChanged()
     {
-        float filling = 0;
+        float filling = _minScale;
 
-        if (_painter.PaintAmount >= _painter.PaintÑonsumption)
+        if (_painter.PaintAmount >= _painter.PaintCost)
         {
-            filling = Mathf.InverseLerp(0, _painter.MaxPaintAmount, _painter.PaintAmount);
-            Mathf.Clamp(filling, 0, 1);
+            filling = Mathf.InverseLerp(_minScale, _painter.MaxPaintAmount, _painter.PaintAmount);
+            filling = Mathf.Clamp(filling, _minScale, _maxScale);
         }
 
-        _paint.transform.localScale = new Vector3(1, filling, 1);
+        _paint.transform.localScale = new Vector3(_maxScale, filling, _maxScale);
     }
 }

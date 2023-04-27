@@ -12,7 +12,7 @@ public class NeedPaintTransition : Transition
 
     private void Update()
     {
-        if(_painter.PaintAmount <= _painter.PaintÑonsumption)
+        if(_painter.PaintAmount <= _painter.PaintCost)
         {
             NeedTransit = true;
         }

@@ -3,16 +3,25 @@ using UnityEngine.Events;
 
 public class PlayerWallet : MonoBehaviour
 {
+    private const string MoneyCount = "MoneyCount";
+
     public int Money { get; private set; }
 
     public event UnityAction<int> MoneyCountChanged;
 
-    private const string _moneyCount = "MoneyCount";
-
     private void Awake()
     {
-        Money = PlayerPrefs.GetInt(_moneyCount);
-        AddMoney(10000);
+        Money = PlayerPrefs.GetInt(MoneyCount);
+    }
+
+    private void OnEnable()
+    {
+        MoneyCountChanged?.Invoke(Money);
+    }
+
+    private void OnDisable()
+    {
+        Save();
     }
 
     public void AddMoney(int money)
@@ -40,19 +49,9 @@ public class PlayerWallet : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        MoneyCountChanged?.Invoke(Money);
-    }
-
-    private void OnDisable()
-    {
-        Save();
-    }
-
     private void Save()
     {
-        PlayerPrefs.SetInt(_moneyCount, Money);
+        PlayerPrefs.SetInt(MoneyCount, Money);
         PlayerPrefs.Save();
     }
 }

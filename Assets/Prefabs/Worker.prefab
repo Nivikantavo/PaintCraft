@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e38fc16b71e9548b5139520cfb210c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "_paint\u0421onsumption": 1
+  _paintCost: 1
   _startPaintAmount: 60
   _rayScan: {fileID: 3128279650635383088}
   _paintParticle: {fileID: 1995886668608507108}

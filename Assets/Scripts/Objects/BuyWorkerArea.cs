@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BuyWorkerArea : BuyArea
 {
-    private const string _workersCount = "WorkersCount";
+    private const string WorkersCount = "WorkersCount";
 
     protected override void UnlockObject(bool firstUnlock)
     {
@@ -10,7 +10,7 @@ public class BuyWorkerArea : BuyArea
 
         if (firstUnlock)
         {
-            PlayerPrefs.SetInt(_workersCount, PlayerPrefs.GetInt(_workersCount) + 1);
+            PlayerPrefs.SetInt(WorkersCount, PlayerPrefs.GetInt(WorkersCount) + 1);
         }
     }
 }

@@ -13,6 +13,8 @@ public class CoinsSpawner : ObjectPool
     [SerializeField] private float _moveTime;
     [SerializeField] private int _burstVolume;
 
+    private int _spawnSpace = 150;
+
     private void Start()
     {
         Initialize(_spawnPrefab);
@@ -37,7 +39,7 @@ public class CoinsSpawner : ObjectPool
     {
         for (int i = 0; i < count; i++)
         {
-            Vector3 offset = new Vector3(Random.Range(-150, 150), Random.Range(-150, 150));
+            Vector3 offset = new Vector3(Random.Range(-_spawnSpace, _spawnSpace), Random.Range(-_spawnSpace, _spawnSpace));
             if (TryGetObject(out GameObject coin))
             {
                 coin.transform.position = transform.position + offset;

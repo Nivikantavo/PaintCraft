@@ -21,11 +21,11 @@ public class FirstLevelTip : ObjectPool
 
     private void Update()
     {
-        if(_player.PaintAmount < _player.PaintÑonsumption && _isCurrentTargetWalls == true)
+        if(_player.PaintAmount < _player.PaintCost && _isCurrentTargetWalls == true)
         {
             ChangeTargets(_buckets);
         }
-        else if(_player.PaintAmount >= _player.PaintÑonsumption && _isCurrentTargetWalls == false)
+        else if(_player.PaintAmount >= _player.PaintCost && _isCurrentTargetWalls == false)
         {
             ChangeTargets(_walls);
         }

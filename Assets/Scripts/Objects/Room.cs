@@ -5,17 +5,35 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider))]
 public class Room : MonoBehaviour
 {
-    public Color Color => _roomColor;
-    public float DonePercentage {get; private set;}
-
     [SerializeField] private List<Wall> _walls;
     [SerializeField] private Color _roomColor;
 
     private int _wallsPaintedCount;
 
+    public Color Color => _roomColor;
+    public float DonePercentage { get; private set; }
+
     public event UnityAction<Room> PaintedComplited;
     public event UnityAction DonePercentageChanged;
     public event UnityAction<Room> PlayerEnterRoom;
+
+    private void Awake()
+    {
+        SetWallsColor();
+
+        foreach (var wall in _walls)
+        {
+            wall.WallPainted += CalculateDonePercentage;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<Player>(out Player player))
+        {
+            PlayerEnterRoom?.Invoke(this);
+        }
+    }
 
     public List<Wall> GetUnpaitedWalls()
     {
@@ -30,24 +48,6 @@ public class Room : MonoBehaviour
         }
 
         return unpaintedWalls;
-    }
-
-    private void Awake()
-    {
-        SetWallsColor();
-
-        foreach (var wall in _walls)
-        {
-            wall.WallPainted += CalculateDonePercentage;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.TryGetComponent<Player>(out Player player))
-        {
-            PlayerEnterRoom?.Invoke(this);
-        }
     }
 
     private void SetWallsColor()

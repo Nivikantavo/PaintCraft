@@ -15,12 +15,6 @@ public class EndLevelPanel : MonoBehaviour
     [SerializeField] private GameObject _joystick;
     [SerializeField] private AdStarter _adStarter;
 
-    public void ViewReward()
-    {
-        _reward.interactable = false;
-        _moneyEarned.text = _progressTracker.MoneyEarnedPerLevel.ToString();
-    }
-
     private void OnEnable()
     {
         _moneyEarned.text = _progressTracker.MoneyEarnedPerLevel.ToString();
@@ -41,11 +35,15 @@ public class EndLevelPanel : MonoBehaviour
         _reward.onClick.RemoveListener(OnRewardButtonClick);
     }
 
+    public void ViewReward()
+    {
+        _reward.interactable = false;
+        _moneyEarned.text = _progressTracker.MoneyEarnedPerLevel.ToString();
+    }
+
     private void OnRewardButtonClick()
     {
         GameAnalytics.NewDesignEvent("rewardtype-ad-click");
         _adStarter.ShowVideoAd();
     }
-
-    
 }

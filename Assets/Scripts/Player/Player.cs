@@ -2,17 +2,16 @@ using UnityEngine;
 
 public class Player : Painter, IUpgradable
 {
-    public float MovmentSpeed { get; private set; }
+    private const string Capacity = "PlayerCapacity";
 
     [SerializeField] private float _defaultCapacity;
 
-    private const string _capacity = "PlayerCapacity";
+    public float MovmentSpeed { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
         PaintAmount = _startPaintAmount;
-        //PlayerPrefs.DeleteAll();
     }
 
     protected override void OnEnable()
@@ -27,6 +26,6 @@ public class Player : Painter, IUpgradable
 
     public override void SetUpgrades()
     {
-        _maxPaintAmount = PlayerPrefs.GetFloat(_capacity, _defaultCapacity);
+        _maxPaintAmount = PlayerPrefs.GetFloat(Capacity, _defaultCapacity);
     }
 }

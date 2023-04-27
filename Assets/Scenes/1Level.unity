@@ -2836,39 +2836,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8851641419954058321, guid: 149fddf70d1f87e488c6cff02f05cb72,
-        type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 1614059361}
     - target: {fileID: 8855776192376495787, guid: 149fddf70d1f87e488c6cff02f05cb72,
         type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 1614059361}
-    - target: {fileID: 8926218919960358685, guid: 149fddf70d1f87e488c6cff02f05cb72,
-        type: 3}
-      propertyPath: m_text
-      value: "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0435 \u0437\u0430\u0434\u0430\u043D\u0438\u0435"
-      objectReference: {fileID: 0}
-    - target: {fileID: 8926218920105626370, guid: 149fddf70d1f87e488c6cff02f05cb72,
-        type: 3}
-      propertyPath: m_text
-      value: "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C\u0441\u044F
-        \u043D\u0430 \u0431\u0430\u0437\u0443"
-      objectReference: {fileID: 0}
-    - target: {fileID: 8926218920877931067, guid: 149fddf70d1f87e488c6cff02f05cb72,
-        type: 3}
-      propertyPath: m_text
-      value: "\u041C\u0438\u0441\u0441\u0438\u044F \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u0430!"
-      objectReference: {fileID: 0}
-    - target: {fileID: 8926218921752071320, guid: 149fddf70d1f87e488c6cff02f05cb72,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8851641419954058321, guid: 149fddf70d1f87e488c6cff02f05cb72, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 149fddf70d1f87e488c6cff02f05cb72, type: 3}
 --- !u!114 &1832233004003943109 stripped
 MonoBehaviour:
@@ -3463,6 +3436,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -5572664010943341744, guid: 7d23566422a1b1b44961f8a4fec27169,
         type: 2}
+    - target: {fileID: 465543906004505381, guid: 1bb5499633adc5444b2a22e8a448b3e5,
+        type: 3}
+      propertyPath: _paintCost
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 465543906004505381, guid: 1bb5499633adc5444b2a22e8a448b3e5,
         type: 3}
       propertyPath: _defaultCapacity

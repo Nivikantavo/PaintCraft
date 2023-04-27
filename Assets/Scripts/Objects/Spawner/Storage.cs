@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Storage : MonoBehaviour
 {
-    public Color PaintColor => _color;
-
     [SerializeField] private BucketSpawner _spawner;
     [SerializeField] private StoragePoint[] _pointsSource;
     [SerializeField] private Color _color;
 
     private StoragePoint[,] _storagePoints = new StoragePoint[3, 3];
+
+    public Color PaintColor => _color;
 
     private void Awake()
     {

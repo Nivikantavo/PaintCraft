@@ -4,9 +4,7 @@ using UnityEngine.Events;
 
 public class Wall : Interactable, IUpgradable
 {
-    public float Painted => _painted;
-    public Color Color => _color;
-    public Vector3 PaintigPoint => _paintingPoint.position;
+    private const string PaintingReward = "Reward";
 
     [SerializeField] private ParticleSystem _coinEffect;
     [SerializeField] private int _defaultReward;
@@ -25,15 +23,21 @@ public class Wall : Interactable, IUpgradable
     private Vector2 _startSize;
     private Coroutine _painting;
 
-    private const string _paintingReward = "Reward";
+    public float Painted => _painted;
+    public Color Color => _color;
+    public Vector3 PaintigPoint => _paintingPoint.position;
 
     public event UnityAction<Wall> WallPainted;
 
+    private void Awake()
+    {
+        _startSize = _paintTexture.size;
+        SetUpgrades();
+    }
+
     public void SetUpgrades()
     {
-        Debug.Log("GetInt: " + PlayerPrefs.GetInt(_paintingReward));
-        _reward = (int)PlayerPrefs.GetFloat(_paintingReward, _defaultReward);
-        Debug.Log("reward: " + _reward);
+        _reward = (int)PlayerPrefs.GetFloat(PaintingReward, _defaultReward);
     }
 
     public void SetColor(Color color)
@@ -42,12 +46,6 @@ public class Wall : Interactable, IUpgradable
 
         _paintTexture.color = _color;
         _stripe.color = _color;
-    }
-
-    private void Awake()
-    {
-        _startSize = _paintTexture.size;
-        SetUpgrades();
     }
 
     private IEnumerator Paintig()

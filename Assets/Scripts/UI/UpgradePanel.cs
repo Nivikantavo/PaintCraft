@@ -1,5 +1,4 @@
 using Lean.Localization;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +6,6 @@ using UnityEngine.UI;
 public class UpgradePanel : MonoBehaviour
 {
     [SerializeField] private List<UpgradeView> _upgradeView;
-
     [SerializeField] private LeanLocalizedTextMeshProUGUI _label;
     [SerializeField] private Image _image;
 
@@ -46,10 +44,6 @@ public class UpgradePanel : MonoBehaviour
             _image.sprite = upgradeStation.Image;
 
             Render();
-        }
-        else
-        {
-            throw new NullReferenceException();
         }
     }
 

@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class Pointer : MonoBehaviour
 {
-    public Transform Target => _target;
-
     [SerializeField] private Vector3 _offset;
 
     private Transform _target;
+    public Transform Target => _target;
 
     private void Update()
     {

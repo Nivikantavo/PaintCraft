@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +14,9 @@ public class PaintingState : State
     private Worker _worker;
     private Wall _currentWall;
     private Coroutine _paintingCorutine;
+
+    private float _distanceOffset = 0.5f;
+    private int _straightAngle = 90;
 
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class PaintingState : State
 
         FindeUnpaintedWall();
     }
+
     private void OnDisable()
     {
         if(_paintingCorutine != null)
@@ -91,7 +94,7 @@ public class PaintingState : State
     {
         _agent.SetDestination(_currentWall.PaintigPoint);
 
-        if (Vector3.Distance(_currentWall.PaintigPoint, transform.position) <= _stoppingDistance + 0.5f)
+        if (Vector3.Distance(_currentWall.PaintigPoint, transform.position) <= _stoppingDistance + _distanceOffset)
         {
             if (_currentWall.Painted >= 1)
             {
@@ -110,7 +113,7 @@ public class PaintingState : State
                 {
                     _worker.TryTakePaint(0, _currentWall.Color);
                 }
-                transform.rotation = Quaternion.Euler(new Vector3(_currentWall.transform.eulerAngles.x, _currentWall.transform.eulerAngles.y + 90, _currentWall.transform.eulerAngles.z));
+                transform.rotation = Quaternion.Euler(new Vector3(_currentWall.transform.eulerAngles.x, _currentWall.transform.eulerAngles.y + _straightAngle, _currentWall.transform.eulerAngles.z));
             }
         }
     }

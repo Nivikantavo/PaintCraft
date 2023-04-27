@@ -6,18 +6,36 @@ using UnityEngine.AI;
 [RequireComponent(typeof(FindingPaintState))]
 public class Worker : Painter
 {
+    private const string Speed = "WorkerSpeed";
+    private const string Capacity = "WorkerCapacity";
+
     public Room CurrentRoom { get; private set; }
 
     [SerializeField] private float _defaultCapacity;
     [SerializeField] private float _defaultSpeed;
 
     private List<Room> _rooms;
-
     private FindingPaintState _findingPaintState;
     private NavMeshAgent _agent;
 
-    private const string _speed = "WorkerSpeed";
-    private const string _capacity = "WorkerCapacity";
+    protected override void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        _findingPaintState = GetComponent<FindingPaintState>();
+        base.Awake();
+        _startPaintAmount = _maxPaintAmount;
+        PaintAmount = _startPaintAmount;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        foreach (Room room in _rooms)
+        {
+            room.PaintedComplited -= OnPaintedComplited;
+        }
+    }
 
     public bool ChooseRoom()
     {
@@ -37,29 +55,10 @@ public class Worker : Painter
         }
     }
 
-    protected override void Awake()
-    {
-        _agent = GetComponent<NavMeshAgent>();
-        _findingPaintState = GetComponent<FindingPaintState>();
-        base.Awake();
-        _startPaintAmount = _maxPaintAmount / 2;
-        PaintAmount = _startPaintAmount;
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-
-        foreach (Room room in _rooms)
-        {
-            room.PaintedComplited -= OnPaintedComplited;
-        }
-    }
-
     public override void SetUpgrades()
     {
-        _maxPaintAmount = PlayerPrefs.GetFloat(_capacity, _defaultCapacity);
-        _agent.speed = PlayerPrefs.GetFloat(_speed, _defaultSpeed);
+        _maxPaintAmount = PlayerPrefs.GetFloat(Capacity, _defaultCapacity);
+        _agent.speed = PlayerPrefs.GetFloat(Speed, _defaultSpeed);
     }
 
     public void Initialize(PlayerWallet wallet, List<Room> rooms, List<Storage> storages)
