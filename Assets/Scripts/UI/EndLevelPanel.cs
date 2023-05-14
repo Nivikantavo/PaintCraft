@@ -15,6 +15,8 @@ public class EndLevelPanel : MonoBehaviour
     [SerializeField] private GameObject _joystick;
     [SerializeField] private AdStarter _adStarter;
 
+    private bool _rewardButtonClicked = false;
+
     private void OnEnable()
     {
         _moneyEarned.text = _progressTracker.MoneyEarnedPerLevel.ToString();
@@ -28,6 +30,11 @@ public class EndLevelPanel : MonoBehaviour
 
     private void OnDisable()
     {
+        if(_rewardButtonClicked == false)
+        {
+            _adStarter.ShowInterstitialAd();
+        }
+
         _joystick.SetActive(true);
 
         _hub.onClick.RemoveListener(_levelLoader.LoadHub);
@@ -45,5 +52,6 @@ public class EndLevelPanel : MonoBehaviour
     {
         GameAnalytics.NewDesignEvent("rewardtype-ad-click");
         _adStarter.ShowVideoAd();
+        _rewardButtonClicked = true;
     }
 }

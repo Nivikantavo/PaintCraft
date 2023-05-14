@@ -1887,6 +1887,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3173462769269102876, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: _rooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 1744623536}
     - target: {fileID: 4311401393580045922, guid: 149fddf70d1f87e488c6cff02f05cb72,
         type: 3}
       propertyPath: m_Name
@@ -1997,11 +2002,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5114083034264249266, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: _levelLoader
+      value: 
+      objectReference: {fileID: 614632903}
+    - target: {fileID: 5114083034264249266, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: _progressTracker
+      value: 
+      objectReference: {fileID: 2501831560178915137}
     - target: {fileID: 7076464768311835261, guid: 149fddf70d1f87e488c6cff02f05cb72,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.41700003
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -3.0893
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -0.0067
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0033416748
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776192376495787, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 2501831560306545985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 149fddf70d1f87e488c6cff02f05cb72, type: 3}
 --- !u!114 &1685509572 stripped

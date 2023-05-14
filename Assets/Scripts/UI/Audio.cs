@@ -6,9 +6,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class Audio : MonoBehaviour
 {
-    private const string AudioEnabling = "AudioEnable";
-    private const string MasterVolume = "MasterVolume";
-
+    [SerializeField] private string _soundType;
+    [SerializeField] private string _audioEnabling;
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private Sprite _offSprite;
     [SerializeField] private Sprite _onSprite;
@@ -16,6 +15,9 @@ public class Audio : MonoBehaviour
     private Button _soundButton;
     private Image _image;
     private bool _soundEnabled;
+    private int _maxVolume = 0;
+    private float _minVolume = -80;
+
 
     private void Awake()
     {
@@ -39,11 +41,11 @@ public class Audio : MonoBehaviour
 
         if (_soundEnabled)
         {
-            PlayerPrefs.SetInt(AudioEnabling, 1);
+            PlayerPrefs.SetInt(_audioEnabling, 1);
         }
         else
         {
-            PlayerPrefs.SetInt(AudioEnabling, 0);
+            PlayerPrefs.SetInt(_audioEnabling, 0);
         }
     }
 
@@ -61,7 +63,7 @@ public class Audio : MonoBehaviour
 
     private void CheckSoundOn()
     {
-        if (PlayerPrefs.GetInt(AudioEnabling, 1) == 1)
+        if (PlayerPrefs.GetInt(_audioEnabling, 1) == 1)
         {
             SoundOn();
         }
@@ -72,14 +74,14 @@ public class Audio : MonoBehaviour
     }
     private void SoundOn()
     {
-        _audioMixer.SetFloat(MasterVolume, 0);
+        _audioMixer.SetFloat(_soundType, _maxVolume);
         _image.sprite = _onSprite;
         _soundEnabled = true;
     }
 
     private void SoundOff()
     {
-        _audioMixer.SetFloat(MasterVolume, -80);
+        _audioMixer.SetFloat(_soundType, _minVolume);
         _image.sprite = _offSprite;
         _soundEnabled = false;
     }

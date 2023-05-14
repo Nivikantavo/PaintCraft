@@ -101,7 +101,6 @@ public class ProgressTracker : MonoBehaviour
     {
         StartCoroutine(DelayBeforeEnd());
         LevelEnd?.Invoke();
-        _adStarter.ShowInterstitialAd();
         #if (UNITY_WEBGL && !UNITY_EDITOR)
         SetGoldInfo();
         #endif

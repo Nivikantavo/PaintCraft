@@ -2617,6 +2617,31 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.40100002
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 4.4107
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -0.0067
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3.7054138
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855776191528567255, guid: 149fddf70d1f87e488c6cff02f05cb72,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0033416748
+      objectReference: {fileID: 0}
     - target: {fileID: 8855776192376495787, guid: 149fddf70d1f87e488c6cff02f05cb72,
         type: 3}
       propertyPath: _player
