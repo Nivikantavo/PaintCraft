@@ -1,15 +1,15 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Painter : MonoBehaviour, IUpgradable
 {
     protected const string LiquidColor = "LiquidColor";
 
-    [SerializeField] protected float _paintCost;
-    [SerializeField] protected float _startPaintAmount;
-    [SerializeField] protected RayScan _rayScan;
-    [SerializeField] protected ParticleSystem _paintParticle;
-    [SerializeField] protected Renderer _paintRenderer;
+    [SerializeField] protected float PaintConsumption;
+    [SerializeField] protected float StartPaintAmount;
+    [SerializeField] protected RayScan RayScan;
+    [SerializeField] protected ParticleSystem PaintParticle;
+    [SerializeField] protected Renderer PaintRenderer;
     [SerializeField] protected PlayerWallet Wallet;
 
     protected float _maxPaintAmount;
@@ -17,25 +17,25 @@ public class Painter : MonoBehaviour, IUpgradable
     public float PaintAmount { get; protected set; }
     public Color CurrentColor { get; private set; }
     public float MaxPaintAmount => _maxPaintAmount;
-    public float PaintCost => _paintCost;
+    public float PaintCost => PaintConsumption;
     public PlayerWallet PlayerWallet => Wallet;
 
-    public event UnityAction PaintAmountChanged;
+    public event Action PaintAmountChanged;
 
     protected virtual void Awake()
     {
-        CurrentColor = _paintRenderer.material.color;
-        SetUpgrades();
+        CurrentColor = PaintRenderer.material.color;
+        SetUpgradeParams();
     }
 
     protected virtual void OnEnable()
     {
-        _rayScan.WallSelected += TryPainting;
+        RayScan.WallSelected += TryPainting;
     }
 
     protected virtual void OnDisable()
     {
-        _rayScan.WallSelected -= TryPainting;
+        RayScan.WallSelected -= TryPainting;
     }
 
     public bool TryTakePaint(float fullnessProcentage, Color color)
@@ -63,9 +63,9 @@ public class Painter : MonoBehaviour, IUpgradable
 
     public bool TrySpendPaint()
     {
-        if (PaintAmount >= _paintCost)
+        if (PaintAmount >= PaintConsumption)
         {
-            PaintAmount -= _paintCost;
+            PaintAmount -= PaintConsumption;
             PaintAmountChanged?.Invoke();
 
             return true;
@@ -78,7 +78,7 @@ public class Painter : MonoBehaviour, IUpgradable
 
     protected virtual void TryPainting(Wall wall)
     {
-        if (PaintAmount >= _paintCost)
+        if (PaintAmount >= PaintConsumption)
         {
             wall.Select(this);
         }
@@ -87,11 +87,11 @@ public class Painter : MonoBehaviour, IUpgradable
     protected void ChangeColor(Color color)
     {
         CurrentColor = color;
-        _paintRenderer.material.color = CurrentColor;
+        PaintRenderer.material.color = CurrentColor;
 
-        ParticleSystem.MainModule mainModule = _paintParticle.main;
+        ParticleSystem.MainModule mainModule = PaintParticle.main;
         mainModule.startColor = CurrentColor;
     }
 
-    public virtual void SetUpgrades(){}
+    public virtual void SetUpgradeParams(){}
 }

@@ -2,7 +2,7 @@ using Agava.YandexGames;
 using System.Collections;
 using UnityEngine;
 
-public class ScoreSetter : MonoBehaviour
+public class RecordHandler : MonoBehaviour
 {
     private const string TotalEarned = "TotalEarned";
 
@@ -45,7 +45,7 @@ public class ScoreSetter : MonoBehaviour
     {
         if (_playerEntry.score < _currentScore)
         {
-            SetNewScore();
+            SetNewRecord();
         }
     }
 
@@ -70,7 +70,7 @@ public class ScoreSetter : MonoBehaviour
         _currentScore = _playerEntry.score;
     }
 
-    private void SetNewScore()
+    private void SetNewRecord()
     {
         Leaderboard.SetScore(TotalEarned, _currentScore);
         Leaderboard.GetPlayerEntry(TotalEarned, OnGetPlayerEntrySuccess);

@@ -7,7 +7,9 @@ public class Storage : MonoBehaviour
     [SerializeField] private StoragePoint[] _pointsSource;
     [SerializeField] private Color _color;
 
-    private StoragePoint[,] _storagePoints = new StoragePoint[3, 3];
+    private int _placesInStorageRow = 3;
+
+    private StoragePoint[,] _storagePoints;
 
     public Color PaintColor => _color;
 
@@ -33,20 +35,19 @@ public class Storage : MonoBehaviour
         return positions;
     }
 
-    public bool TryGetFreePoint(out StoragePoint storagePoint)
+    public StoragePoint TryGetFreePoint()
     {
-        storagePoint = null;
         for (int i = 0; i < _storagePoints.GetLength(0); i++)
         {
             for (int j = 0; j < _storagePoints.GetLength(1); j++)
             {
                 if (_storagePoints[i, j].IsFree == true)
                 {
-                    storagePoint = _storagePoints[i, j];
+                    return _storagePoints[i, j];
                 }
             }
         }
-        return storagePoint != null;
+        return null;
     }
 
     public StoragePoint[] GetPointsRow(int rowNumber)
@@ -70,6 +71,7 @@ public class Storage : MonoBehaviour
 
     private void Initialization()
     {
+        _storagePoints = new StoragePoint[_placesInStorageRow, _placesInStorageRow];
         _color = _spawner.FillColor;
         int iterationNumber = 0;
         for (int i = 0; i < _storagePoints.GetLength(0); i++)

@@ -1,41 +1,44 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class State : MonoBehaviour
+namespace StateMachine
 {
-    [SerializeField] private List<Transition> _transitions;
-
-    public void Enter()
+    public class State : MonoBehaviour
     {
-        if(enabled == false)
+        [SerializeField] private List<Transition> _transitions;
+
+        public void Enter()
         {
-            enabled = true;
-            foreach(var transition in _transitions)
+            if (enabled == false)
             {
-                transition.enabled = true;
-                transition.Init();
+                enabled = true;
+                foreach (var transition in _transitions)
+                {
+                    transition.enabled = true;
+                    transition.Init();
+                }
             }
         }
-    }
 
-    public void Exit()
-    {
-        if(enabled == true)
+        public void Exit()
+        {
+            if (enabled == true)
+            {
+                foreach (var transition in _transitions)
+                    transition.enabled = false;
+
+                enabled = false;
+            }
+        }
+
+        public State GetNextState()
         {
             foreach (var transition in _transitions)
-                transition.enabled = false;
-
-            enabled = false;
+            {
+                if (transition.NeedTransit)
+                    return transition.TargetState;
+            }
+            return null;
         }
-    }
-
-    public State GetNextState()
-    {
-        foreach(var transition in _transitions)
-        {
-            if (transition.NeedTransit)
-                return transition.TargetState;
-        }
-        return null;
     }
 }

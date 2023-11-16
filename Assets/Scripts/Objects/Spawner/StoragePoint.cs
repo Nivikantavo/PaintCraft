@@ -10,11 +10,7 @@ public class StoragePoint : MonoBehaviour
     {
         get
         {
-            return !_bucket;
-        }
-        private set
-        {
-            value = !_bucket;
+            return _bucket == null;
         }
     }
 

@@ -20,7 +20,10 @@ public class WorkerAnimator : MonoBehaviour
 
     private void Update()
     {
-        if ((_minAnimatedVelocity < _agent.velocity.x && _agent.velocity.x < _maxAnimatedVelocity) && (_minAnimatedVelocity < _agent.velocity.z && _agent.velocity.z < _maxAnimatedVelocity))
+        if ((_minAnimatedVelocity < _agent.velocity.x &&
+            _agent.velocity.x < _maxAnimatedVelocity) &&
+            (_minAnimatedVelocity < _agent.velocity.z &&
+            _agent.velocity.z < _maxAnimatedVelocity))
         {
             _animator.SetBool(Moving, false);
         }

@@ -1,6 +1,6 @@
+using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Sorter : MonoBehaviour
 {
@@ -11,9 +11,9 @@ public class Sorter : MonoBehaviour
     private StoragePoint _targetPoint;
     private Storage _curretntStorage;
 
-    public bool HasFreePoint => TryFindFreePoint();
+    public bool HasFreePoint => HasFreePointInStorages();
 
-    public event UnityAction SpawnPointFreed;
+    public event Action SpawnPointFreed;
 
     private void OnEnable()
     {
@@ -37,7 +37,7 @@ public class Sorter : MonoBehaviour
 
     private void SortBucket()
     {
-        if (TryFindFreePoint())
+        if (TrySetCurrentStorage())
         {
             StoragePoint[] currentColumn = _curretntStorage.GetPointsRow(_targetPoint.Column);
             PaintBucket[] buckets = new PaintBucket[] {_currentBucket, currentColumn[0].GetBucket(), currentColumn[1].GetBucket()};
@@ -50,18 +50,35 @@ public class Sorter : MonoBehaviour
         }
     }
 
-    private bool TryFindFreePoint()
+    private bool TrySetCurrentStorage()
+    {
+        if (HasFreePointInStorages() == false)
+            return false;
+
+        foreach (var storage in _storages)
+        {
+            _targetPoint = storage.TryGetFreePoint();
+            if (_targetPoint != null)
+            {
+                _curretntStorage = storage;
+            }
+        }
+        return true;
+    }
+
+    private bool HasFreePointInStorages()
     {
         foreach (var storage in _storages)
         {
-            if (storage.TryGetFreePoint(out _targetPoint))
+            if (storage.TryGetFreePoint() != null)
             {
-                _curretntStorage = storage;
                 return true;
             }
         }
         return false;
     }
+
+    
 
     private void MoveBucketsToPoints(PaintBucket[] buckets, StoragePoint[] points)
     {
@@ -76,10 +93,5 @@ public class Sorter : MonoBehaviour
                 buckets[i].StartMoving(points[i].transform);
             }
         }
-    }
-
-    public bool TryAddBucket(PaintBucket bucket)
-    {
-        return TryFindFreePoint();
     }
 }

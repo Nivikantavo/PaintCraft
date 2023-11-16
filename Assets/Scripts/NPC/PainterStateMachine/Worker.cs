@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using StateMachine;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(FindingPaintState))]
@@ -23,8 +24,8 @@ public class Worker : Painter
         _agent = GetComponent<NavMeshAgent>();
         _findingPaintState = GetComponent<FindingPaintState>();
         base.Awake();
-        _startPaintAmount = _maxPaintAmount;
-        PaintAmount = _startPaintAmount;
+        StartPaintAmount = _maxPaintAmount;
+        PaintAmount = StartPaintAmount;
     }
 
     protected override void OnDisable()
@@ -37,14 +38,14 @@ public class Worker : Painter
         }
     }
 
-    public bool ChooseRoom()
+    public bool TryFindRoom()
     {
         if (_rooms.Count > 0)
         {
             int randomNumber = Random.Range(0, _rooms.Count);
 
             CurrentRoom = _rooms[randomNumber];
-            this.TryTakePaint(0, CurrentRoom.Color);
+            this.TryTakePaint(0, CurrentRoom.ColorPainted);
             return true;
         }
         else
@@ -55,7 +56,7 @@ public class Worker : Painter
         }
     }
 
-    public override void SetUpgrades()
+    public override void SetUpgradeParams()
     {
         _maxPaintAmount = PlayerPrefs.GetFloat(Capacity, _defaultCapacity);
         _agent.speed = PlayerPrefs.GetFloat(Speed, _defaultSpeed);
@@ -72,7 +73,7 @@ public class Worker : Painter
         }
 
         _findingPaintState.Initialize(storages);
-        ChooseRoom();
+        TryFindRoom();
     }
 
     private void OnPaintedComplited(Room room)
@@ -83,7 +84,7 @@ public class Worker : Painter
         }
         if(CurrentRoom == room)
         {
-            ChooseRoom();
+            TryFindRoom();
         }
     }
 }

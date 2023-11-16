@@ -1,20 +1,23 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Painter))]
-public class PaintFullTransition : Transition
+namespace StateMachine
 {
-    private Painter _painter;
-
-    private void Awake()
+    [RequireComponent(typeof(Painter))]
+    public class PaintFullTransition : Transition
     {
-        _painter = GetComponent<Painter>();
-    }
+        private Painter _painter;
 
-    private void Update()
-    {
-        if(_painter.PaintAmount >= _painter.MaxPaintAmount)
+        private void Awake()
         {
-            NeedTransit = true;
+            _painter = GetComponent<Painter>();
+        }
+
+        private void Update()
+        {
+            if (_painter.PaintAmount >= _painter.MaxPaintAmount)
+            {
+                NeedTransit = true;
+            }
         }
     }
 }

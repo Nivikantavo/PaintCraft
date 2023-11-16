@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField] private GameObject _conteiter;
+    [SerializeField] private GameObject _container;
     [SerializeField] private int _capacity;
 
     private List<GameObject> _pool = new List<GameObject>();
@@ -13,7 +13,7 @@ public class ObjectPool : MonoBehaviour
     {
         for (int i = 0; i < _capacity; i++)
         {
-            GameObject spawned = Instantiate(prefab, _conteiter.transform);
+            GameObject spawned = Instantiate(prefab, _container.transform);
             spawned.SetActive(false);
 
             _pool.Add(spawned);

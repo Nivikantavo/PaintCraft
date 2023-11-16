@@ -11,20 +11,20 @@ public class Player : Painter, IUpgradable
     protected override void Awake()
     {
         base.Awake();
-        PaintAmount = _startPaintAmount;
+        PaintAmount = StartPaintAmount;
     }
 
     protected override void OnEnable()
     {
-        _rayScan.WallSelected += TryPainting;
+        RayScan.WallSelected += TryPainting;
     }
 
     protected override void OnDisable()
     {
-        _rayScan.WallSelected -= TryPainting;
+        RayScan.WallSelected -= TryPainting;
     }
 
-    public override void SetUpgrades()
+    public override void SetUpgradeParams()
     {
         _maxPaintAmount = PlayerPrefs.GetFloat(Capacity, _defaultCapacity);
     }

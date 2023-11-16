@@ -1,8 +1,7 @@
 using Agava.YandexGames;
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 public class AdStarter : MonoBehaviour
 {
@@ -10,8 +9,8 @@ public class AdStarter : MonoBehaviour
 
     public int RewardMultiplayer => _rewardMultiplayer;
 
-    public event UnityAction Reward;
-    public event UnityAction AdClose;
+    public event Action Reward;
+    public event Action AdClose;
 
     private void Awake()
     {
@@ -28,16 +27,16 @@ public class AdStarter : MonoBehaviour
 
     public void ShowInterstitialAd()
     {
-//#if (UNITY_WEBGL && !UNITY_EDITOR)
-        InterstitialAd.Show(OnAdOpen, OnInterstitialAdClose);
-//#endif
+#if (UNITY_WEBGL && !UNITY_EDITOR)
+        InterstitialAd.Show(OnAdOpen, OnAdClose);
+#endif
     }
 
     public void ShowVideoAd()
     {
-//#if (UNITY_WEBGL && !UNITY_EDITOR)
+#if (UNITY_WEBGL && !UNITY_EDITOR)
         VideoAd.Show(OnAdOpen, RewardPlayer, OnRewardAdClose, null);
-//#endif
+#endif
     }
 
     private void RewardPlayer()
@@ -54,12 +53,10 @@ public class AdStarter : MonoBehaviour
     private void OnRewardAdClose()
     {
         AdClose?.Invoke();
-
-        AudioListener.pause = false;
-        AudioListener.volume = 1f;
+        OnAdClose();
     }
 
-    private void OnInterstitialAdClose(bool wasShown)
+    private void OnAdClose(bool wasShown = true)
     {
         AudioListener.pause = false;
         AudioListener.volume = 1f;

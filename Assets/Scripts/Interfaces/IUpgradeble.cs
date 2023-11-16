@@ -1,5 +1,5 @@
 
 interface IUpgradable
 {
-    void SetUpgrades();
+    void SetUpgradeParams();
 }

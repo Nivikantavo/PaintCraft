@@ -9907,7 +9907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cursorImage: {fileID: 2092577636}
   _animator: {fileID: 2092577635}
-  _WASD: {fileID: 21300000, guid: cdddd270c501754488610770d48a5f24, type: 3}
+  _keyboard: {fileID: 21300000, guid: cdddd270c501754488610770d48a5f24, type: 3}
   _hand: {fileID: 21300000, guid: 7e705dee563efb1439ffaf81f219d801, type: 3}
 --- !u!1001 &1740101308
 PrefabInstance:

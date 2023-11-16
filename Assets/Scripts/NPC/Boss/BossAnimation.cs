@@ -10,16 +10,16 @@ public class BossAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        _boss.MovmentStarted += OnMovmentStarted;
-        _boss.PlayerAttained += OnPlayerAtteined;
+        _boss.Moving += OnMoving;
+        _boss.Paying += OnPaying;
     }
 
-    private void OnMovmentStarted()
+    private void OnMoving()
     {
         _animator.SetBool(Move, true);
     }
 
-    private void OnPlayerAtteined()
+    private void OnPaying()
     {
         _animator.SetBool(Move, false);
         _animator.SetTrigger(GiveRevard);

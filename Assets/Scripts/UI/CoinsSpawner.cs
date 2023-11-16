@@ -1,11 +1,10 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
-using UnityEngine.Events;
 
 public class CoinsSpawner : ObjectPool
 {
-    public event UnityAction CoinDelivered;
+    public event System.Action CoinDelivered;
 
     [SerializeField] private GameObject _spawnPrefab;
     [SerializeField] private AdStarter _adStarter;

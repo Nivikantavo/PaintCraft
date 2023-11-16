@@ -10,7 +10,9 @@ public class BuyWorkerArea : BuyArea
 
         if (firstUnlock)
         {
-            PlayerPrefs.SetInt(WorkersCount, PlayerPrefs.GetInt(WorkersCount) + 1);
+            int currentWorkersCount = PlayerPrefs.GetInt(WorkersCount);
+            currentWorkersCount++;
+            PlayerPrefs.SetInt(WorkersCount, currentWorkersCount);
         }
     }
 }

@@ -71,11 +71,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e38fc16b71e9548b5139520cfb210c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _paintCost: 1
-  _startPaintAmount: 60
-  _rayScan: {fileID: 3128279650635383088}
-  _paintParticle: {fileID: 1995886668608507108}
-  _paintRenderer: {fileID: 4052622527866227865}
+  PaintConsumption: 1
+  StartPaintAmount: 60
+  RayScan: {fileID: 3128279650635383088}
+  PaintParticle: {fileID: 1995886668608507108}
+  PaintRenderer: {fileID: 4052622527866227865}
   Wallet: {fileID: 0}
   _defaultCapacity: 100
   _defaultSpeed: 2

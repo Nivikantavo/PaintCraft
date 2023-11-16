@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EndLevelPanel : MonoBehaviour
 {
+    private const string XSign = "X";
+
     [SerializeField] private LevelLoader _levelLoader;
     [SerializeField] private ProgressTracker _progressTracker;
     [SerializeField] private Button _nextLevel;
@@ -19,8 +21,10 @@ public class EndLevelPanel : MonoBehaviour
 
     private void OnEnable()
     {
+        string rewardMultiplayerText = XSign + _adStarter.RewardMultiplayer.ToString();
+
         _moneyEarned.text = _progressTracker.MoneyEarnedPerLevel.ToString();
-        _rewardMultiplayer.text = "X" + _adStarter.RewardMultiplayer.ToString();
+        _rewardMultiplayer.text = rewardMultiplayerText;
         _joystick.SetActive(false);
 
         _hub.onClick.AddListener(_levelLoader.LoadHub);

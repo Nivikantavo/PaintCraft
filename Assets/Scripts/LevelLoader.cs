@@ -17,7 +17,7 @@ public class LevelLoader : MonoBehaviour
     {
         if (_progressTracker != null)
         {
-            _progressTracker.LevelEnd += SaveProgress;
+            _progressTracker.LevelEnd += OnLevelEnd;
         }
     }
 
@@ -25,7 +25,7 @@ public class LevelLoader : MonoBehaviour
     {
         if (_progressTracker != null)
         {
-            _progressTracker.LevelEnd -= SaveProgress;
+            _progressTracker.LevelEnd -= OnLevelEnd;
         }
     }
 
@@ -50,7 +50,7 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-    private void SaveProgress()
+    private void OnLevelEnd()
     {
         int currentLevelNumber = SceneManager.GetActiveScene().buildIndex - 1;
 
