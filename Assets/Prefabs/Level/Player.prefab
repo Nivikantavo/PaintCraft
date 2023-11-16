@@ -123,11 +123,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2f7631e462dd6478b54a6d34dbc366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _paintCost: 1
-  _startPaintAmount: 0
-  _rayScan: {fileID: 465543906004505382}
-  _paintParticle: {fileID: 7048761688602060966}
-  _paintRenderer: {fileID: 7015730768846306444}
+  PaintConsumption: 1
+  StartPaintAmount: 0
+  RayScan: {fileID: 465543906004505382}
+  PaintParticle: {fileID: 7048761688602060966}
+  PaintRenderer: {fileID: 7015730768846306444}
   Wallet: {fileID: 4282851966414324825}
   _defaultCapacity: 100
 --- !u!54 &465543906004505380

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirstLevelTip : ObjectPool
+public class GameMechanicTeacher : ObjectPool
 {
     [SerializeField] private BucketSpawner _spawner;
     [SerializeField] private Player _player;

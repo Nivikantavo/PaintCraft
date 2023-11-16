@@ -2,76 +2,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(CapsuleCollider))]
-[RequireComponent(typeof(Worker))]
-public class FindingPaintState : State
+namespace StateMachine
 {
-    private List<Storage> _storages;
-    private NavMeshAgent _agent;
-    private Worker _worker;
-    private Storage _currentStorage;
-    private CapsuleCollider _collider;
-
-    private void Awake()
+    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(CapsuleCollider))]
+    [RequireComponent(typeof(Worker))]
+    public class FindingPaintState : State
     {
-        _worker = GetComponent<Worker>();
-        _agent = GetComponent<NavMeshAgent>();
-        _collider = GetComponent<CapsuleCollider>();
-    }
+        private List<Storage> _storages;
+        private NavMeshAgent _agent;
+        private Worker _worker;
+        private Storage _currentStorage;
+        private CapsuleCollider _collider;
 
-    private void OnEnable()
-    {
-        _collider.enabled = true;
-    }
-
-    private void OnDisable()
-    {
-        _collider.enabled = false;
-    }
-
-    private void Update()
-    {
-        if( _worker.CurrentRoom == null)
+        private void Awake()
         {
-            _worker.ChooseRoom();
+            _worker = GetComponent<Worker>();
+            _agent = GetComponent<NavMeshAgent>();
+            _collider = GetComponent<CapsuleCollider>();
         }
 
-        if(_currentStorage != null && ColorComparator.CompareColor(_currentStorage.PaintColor, _worker.CurrentRoom.Color) )
+        private void OnEnable()
         {
-            GoForPaint();
+            _collider.enabled = true;
         }
-        else
+
+        private void OnDisable()
         {
-            _currentStorage = FindStorage();
+            _collider.enabled = false;
         }
-    }
 
-    public void Initialize(List<Storage> storages)
-    {
-        _storages = storages;
-    }
-
-    private Storage FindStorage()
-    {
-        foreach (Storage storage in _storages)
+        private void Update()
         {
-            if (ColorComparator.CompareColor(storage.PaintColor, _worker.CurrentRoom.Color))
+            if( _worker.CurrentRoom == null)
             {
-                return storage;
+                _worker.TryFindRoom();
+            }
+
+            if(_currentStorage != null && ColorComparator.CompareColor(_currentStorage.PaintColor, _worker.CurrentRoom.ColorPainted) )
+            {
+                GoForPaint();
+            }
+            else
+            {
+                _currentStorage = FindStorage();
             }
         }
-        _worker.ChooseRoom();
-        return FindStorage();
-    }
 
-    private void GoForPaint()
-    {
-        List<Vector3> route = _currentStorage.GetBucketsPosition();
-        
-        foreach (Vector3 routePoint in route)
+        public void Initialize(List<Storage> storages)
         {
-            _agent.SetDestination(routePoint);
+            _storages = storages;
+        }
+
+        private Storage FindStorage()
+        {
+            foreach (Storage storage in _storages)
+            {
+                if (ColorComparator.CompareColor(storage.PaintColor, _worker.CurrentRoom.ColorPainted))
+                {
+                    return storage;
+                }
+            }
+            _worker.TryFindRoom();
+            return FindStorage();
+        }
+
+        private void GoForPaint()
+        {
+            List<Vector3> route = _currentStorage.GetBucketsPosition();
+        
+            foreach (Vector3 routePoint in route)
+            {
+                _agent.SetDestination(routePoint);
+            }
         }
     }
 }

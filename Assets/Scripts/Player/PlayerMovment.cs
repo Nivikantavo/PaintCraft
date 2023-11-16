@@ -19,7 +19,7 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        SetUpgrades();
+        SetUpgradeParams();
     }
 
     private void OnDisable()
@@ -54,7 +54,7 @@ public class PlayerMovment : MonoBehaviour, IUpgradable
         _rigidbody.AddForce(_velocity * _speed);
     }
 
-    public void SetUpgrades()
+    public void SetUpgradeParams()
     {
         _speed = PlayerPrefs.GetFloat(PlayerSpeed, _defaultSpeed);
     }

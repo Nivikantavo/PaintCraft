@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using DeviceType = Agava.YandexGames.DeviceType;
 
-public class StartTip : MonoBehaviour
+public class InputTip : MonoBehaviour
 {
     private const string PlayerProgress = "PlayerProgress";
     private const string GiveTip = "GiveTip";
 
     [SerializeField] private Image _cursorImage;
     [SerializeField] private Animator _animator;
-    [SerializeField] private Sprite _WASD;
+    [SerializeField] private Sprite _keyboard;
     [SerializeField] private Sprite _hand;
 
     private bool _stopped = false;
@@ -38,7 +38,7 @@ public class StartTip : MonoBehaviour
 
         if (Device.Type == DeviceType.Desktop)
         {
-            _cursorImage.sprite = _WASD;
+            _cursorImage.sprite = _keyboard;
             _animator.enabled = false;
         }
     }

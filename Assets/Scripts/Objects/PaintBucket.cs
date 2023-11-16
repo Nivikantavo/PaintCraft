@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PaintBucket : MonoBehaviour
 {
@@ -24,8 +24,8 @@ public class PaintBucket : MonoBehaviour
 
     public Color PaintColor => _paintColor;
 
-    public event UnityAction BucketFulled;
-    public event UnityAction BucketCollected;
+    public event Action BucketFulled;
+    public event Action BucketCollected;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -92,7 +92,7 @@ public class PaintBucket : MonoBehaviour
     private IEnumerator FillBucket(float fillingTime)
     {
         _timeFillingStep = fillingTime / (_maxPaintAmount / _fillingStep);
-        WaitForSeconds StepBetweenLifts = new WaitForSeconds(_timeFillingStep);
+        WaitForSeconds stepBetweenLifts = new WaitForSeconds(_timeFillingStep);
 
         while (_currentPaintAmount < _maxPaintAmount)
         {
@@ -100,7 +100,7 @@ public class PaintBucket : MonoBehaviour
             _currentPaintAmount = Mathf.Clamp(_currentPaintAmount, 0, _maxPaintAmount);
             _paint.transform.localScale = new Vector3(_maxScale, _currentPaintAmount, _maxScale);
 
-            yield return StepBetweenLifts;
+            yield return stepBetweenLifts;
         }
         BucketFulled?.Invoke();
     }

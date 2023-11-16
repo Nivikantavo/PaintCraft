@@ -730,15 +730,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9309c8bc516f08b47818ac006f77b525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _conteiter: {fileID: 915149180}
+  _container: {fileID: 915149180}
   _capacity: 40
-  _bucketPrefub: {fileID: 6997633946868208445, guid: 9949417a37cde164f9acc87beaf07a59,
+  _bucketTemplate: {fileID: 6997633946868208445, guid: 9949417a37cde164f9acc87beaf07a59,
     type: 3}
   _spawnPoint: {fileID: 1889325759}
   _fillingTime: 2
   _spawnDelay: 1
   _fillColor: {r: 0, g: 0, b: 0, a: 0}
-  _paintParticles: {fileID: 3186330878177556322}
+  _paintStream: {fileID: 3186330878177556322}
   _sorter: {fileID: 1246511138}
 --- !u!1 &3186330878177556327
 GameObject:

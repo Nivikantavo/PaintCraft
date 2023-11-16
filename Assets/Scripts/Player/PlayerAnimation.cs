@@ -22,9 +22,4 @@ public class PlayerAnimation : MonoBehaviour
             _animator.SetBool(Moving, _playerMovment.Moving);
         }
     }
-
-    public void Cut()
-    {
-        _animator.SetLayerWeight(1, 1);
-    }
 }

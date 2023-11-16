@@ -1,8 +1,8 @@
 using GameAnalyticsSDK;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ProgressTracker : MonoBehaviour
 {
@@ -19,9 +19,9 @@ public class ProgressTracker : MonoBehaviour
 
     public int MoneyEarnedPerLevel { get; private set; }
 
-    public event UnityAction AllWallsPainted;
-    public event UnityAction LevelEnd;
-    public event UnityAction RewardReceived;
+    public event Action AllWallsPainted;
+    public event Action LevelEnd;
+    public event Action RewardReceived;
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class ProgressTracker : MonoBehaviour
         }
 
         _playerWallet.MoneyCountChanged += OnPlayerMoneyChanged;
-        _boss.PlayerAttained += OnLevelEnd;
+        _boss.Paying += OnLevelEnd;
         _adStarter.Reward += OnRewardVideoSuccess;
         _adStarter.AdClose += OnRewardVideoClose;
     }
@@ -60,7 +60,7 @@ public class ProgressTracker : MonoBehaviour
         }
 
         _playerWallet.MoneyCountChanged -= OnPlayerMoneyChanged;
-        _boss.PlayerAttained -= OnLevelEnd;
+        _boss.Paying -= OnLevelEnd;
         _adStarter.Reward -= OnRewardVideoSuccess;
         _adStarter.AdClose -= OnRewardVideoClose;
     }

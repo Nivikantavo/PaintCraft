@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerWallet : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class PlayerWallet : MonoBehaviour
 
     public int Money { get; private set; }
 
-    public event UnityAction<int> MoneyCountChanged;
+    public event Action<int> MoneyCountChanged;
 
     private void Awake()
     {

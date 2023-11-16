@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Wall : Interactable, IUpgradable
 {
@@ -27,15 +27,15 @@ public class Wall : Interactable, IUpgradable
     public Color Color => _color;
     public Vector3 PaintigPoint => _paintingPoint.position;
 
-    public event UnityAction<Wall> WallPainted;
+    public event Action<Wall> WallPainted;
 
     private void Awake()
     {
         _startSize = _paintTexture.size;
-        SetUpgrades();
+        SetUpgradeParams();
     }
 
-    public void SetUpgrades()
+    public void SetUpgradeParams()
     {
         _reward = (int)PlayerPrefs.GetFloat(PaintingReward, _defaultReward);
     }

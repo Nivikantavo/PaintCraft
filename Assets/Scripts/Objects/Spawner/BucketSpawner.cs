@@ -1,14 +1,14 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class BucketSpawner : ObjectPool
 {
-    [SerializeField] private GameObject _bucketPrefub;
+    [SerializeField] private GameObject _bucketTemplate;
     [SerializeField] private StoragePoint _spawnPoint;
     [SerializeField] private float _fillingTime;
     [SerializeField] private float _spawnDelay;
     [SerializeField] private Color _fillColor;
-    [SerializeField] private ParticleSystem _paintParticles;
+    [SerializeField] private ParticleSystem _paintStream;
     [SerializeField] private Sorter _sorter;
 
     private float _secondsBetweenSpawn;
@@ -16,17 +16,17 @@ public class BucketSpawner : ObjectPool
 
     public Color FillColor => _fillColor;
 
-    public event UnityAction<PaintBucket> BucketSpawned;
+    public event Action<PaintBucket> BucketSpawned;
 
     private void Awake()
     {
-        var mainModule = _paintParticles.main;
+        var mainModule = _paintStream.main;
         mainModule.startColor = _fillColor;
     }
 
     private void Start()
     {
-        Initialize(_bucketPrefub);
+        Initialize(_bucketTemplate);
         _secondsBetweenSpawn = _fillingTime + _spawnDelay;
         _elapsedTime = _secondsBetweenSpawn;
     }
@@ -49,7 +49,7 @@ public class BucketSpawner : ObjectPool
     {
         PaintBucket paintBucket = bucket.GetComponent<PaintBucket>();
 
-        if (_sorter.TryAddBucket(paintBucket))
+        if (_sorter.HasFreePoint)
         {
             bucket.SetActive(true);
             bucket.transform.position = spawnPoint;

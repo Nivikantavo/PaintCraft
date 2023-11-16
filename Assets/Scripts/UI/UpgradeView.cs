@@ -1,7 +1,7 @@
 using Lean.Localization;
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UpgradeView : MonoBehaviour
@@ -16,7 +16,7 @@ public class UpgradeView : MonoBehaviour
 
     private Upgradable _upgradable;
 
-    public event UnityAction<Upgradable> UpgradeButtonClick;
+    public event Action<Upgradable> UpgradeButtonClick;
 
     private void OnEnable()
     {

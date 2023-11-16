@@ -1,6 +1,6 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
 public class Boss : MonoBehaviour
 {
@@ -15,8 +15,8 @@ public class Boss : MonoBehaviour
 
     public int LevelRevard => _levelRevard;
 
-    public event UnityAction MovmentStarted;
-    public event UnityAction PlayerAttained;
+    public event Action Moving;
+    public event Action Paying;
 
     private void Awake()
     {
@@ -52,7 +52,7 @@ public class Boss : MonoBehaviour
     private void OnAllWallsPainted()
     {
         _workDone = true;
-        MovmentStarted?.Invoke();
+        Moving?.Invoke();
     }
 
     private void ApproachPlayer()
@@ -63,7 +63,7 @@ public class Boss : MonoBehaviour
     private void GiveRevard()
     {
         _player.PlayerWallet.AddMoney(_levelRevard);
-        PlayerAttained?.Invoke();
+        Paying?.Invoke();
         enabled = false;
     }
 }

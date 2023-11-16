@@ -14,6 +14,9 @@ public class BuyArea : MonoBehaviour
     [SerializeField] private string _areaName;
 
     private int _paid;
+    private int _payStep = 100;
+    private float _payDelay = 0.01f;
+    private Vector3 _particlesOffset = new(0, 1);
     private Coroutine _paidCorutine;
 
     private void Awake()
@@ -36,7 +39,7 @@ public class BuyArea : MonoBehaviour
         {
             if(_paidCorutine == null && _paid != _price)
             {
-                _paidCorutine = StartCoroutine(PaidCorutine(player));
+                _paidCorutine = StartCoroutine(PaidCorutine(player.PlayerWallet));
             }
         }
     }
@@ -59,33 +62,19 @@ public class BuyArea : MonoBehaviour
         }
     }
 
-    private IEnumerator PaidCorutine(Player player)
+    private IEnumerator PaidCorutine(PlayerWallet playerWallet)
     {
-        WaitForSeconds delay = new(0.01f);
-        Vector3 particlesOffset = new(0, 1);
-        int contribution = _price / 100;
+        WaitForSeconds delay = new(_payDelay);
+        int contribution = _price / _payStep;
 
         while (_price > _paid)
         {
-            if(_price - _paid < contribution)
-            {
-                contribution = _price - _paid;
-            }
-            else if(player.PlayerWallet.Money < contribution && player.PlayerWallet.Money > 0)
-            {
-                contribution = player.PlayerWallet.Money;
-            }
+            CalculateContribution(ref contribution, playerWallet.Money);
 
-            if (player.PlayerWallet.SpendMoney(contribution))
+            if (playerWallet.SpendMoney(contribution))
             {
-                if(_paidParticles.isPlaying == false)
-                {
-                    _paidParticles.Play();
-                }
-                
-                _paidParticles.transform.position = player.transform.position + particlesOffset;
                 _paid += contribution;
-                _paidText.text = (_price - _paid).ToString();
+                PayDisplaying(playerWallet.transform);
                 yield return delay;
             }
             else
@@ -109,5 +98,29 @@ public class BuyArea : MonoBehaviour
             PlayerPrefs.SetInt(_areaName, _paid);
         }
         gameObject.SetActive(false);
+    }
+
+    private void PayDisplaying(Transform payer)
+    {
+        if (_paidParticles.isPlaying == false)
+        {
+            _paidParticles.Play();
+        }
+
+        _paidParticles.transform.position = payer.position + _particlesOffset;
+        string paidText = (_price - _paid).ToString();
+        _paidText.text = paidText;
+    }
+
+    private void CalculateContribution(ref int contribution, int playerMoney)
+    {
+        if (_price - _paid < contribution)
+        {
+            contribution = _price - _paid;
+        }
+        else if (playerMoney < contribution && playerMoney > 0)
+        {
+            contribution = playerMoney;
+        }
     }
 }

@@ -359,7 +359,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb92ee3b260383e42bff65c91d0774f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicSource: {fileID: 58987598}
 --- !u!4 &156786213 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c439117ffbda5b14bb541b42d743c8da,
@@ -2546,7 +2545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2569,6 +2568,61 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 342611070}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1680713624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1680713625}
+  - component: {fileID: 1680713626}
+  m_Layer: 0
+  m_Name: Loading
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1680713625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680713624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1934911334894685574}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1680713626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680713624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: Loading...
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430..."
+    Object: {fileID: 0}
+  - Language: Turkish
+    Text: "Y\xFCkleniyor..."
+    Object: {fileID: 0}
 --- !u!4 &1701351816 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a324a1ce43449e4699ac75da269cf7c,
@@ -3178,14 +3232,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9309c8bc516f08b47818ac006f77b525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _conteiter: {fileID: 961007637808118826}
+  _container: {fileID: 961007637808118826}
   _capacity: 40
-  _bucketPrefub: {fileID: 0}
+  _bucketTemplate: {fileID: 0}
   _spawnPoint: {fileID: 961007636699791337}
   _fillingTime: 5
   _spawnDelay: 0
   _fillColor: {r: 1, g: 0.8117647, b: 0.23921569, a: 1}
-  _paintParticles: {fileID: 2408916003759118900}
+  _paintStream: {fileID: 2408916003759118900}
   _sorter: {fileID: 961007636788882804}
 --- !u!65 &114637880158981351
 BoxCollider:
@@ -5405,6 +5459,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1934911335604430050}
+  - {fileID: 1680713625}
   m_Father: {fileID: 1934911336155794644}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12191,6 +12246,7 @@ GameObject:
   - component: {fileID: 5903498219339251372}
   - component: {fileID: 5903498219339251373}
   - component: {fileID: 5903498219339251376}
+  - component: {fileID: 5903498219339251377}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -12211,6 +12267,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _progressTracker: {fileID: 0}
+--- !u!114 &5903498219339251377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5903498219339251375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5aa956f3b0c71419ec070765a66164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startGameButton: {fileID: 1655618188}
+  _startGameText: {fileID: 1169298582}
+  _loading: {fileID: 1680713626}
+  _start: {fileID: 1934911335604430049}
 --- !u!1001 &5903498219575663535
 PrefabInstance:
   m_ObjectHideFlags: 0

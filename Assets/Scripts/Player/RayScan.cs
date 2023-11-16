@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(Painter))]
 public class RayScan : MonoBehaviour
@@ -16,20 +16,10 @@ public class RayScan : MonoBehaviour
     private List<Wall> _detectedWalls;
     private Painter _painter;
 
-    public float CurrentWallPainted
-    {
-        get
-        {
-            return _currentWall.Painted;
-        }
-        set
-        {
-            CurrentWallPainted = _currentWall.Painted;
-        }
-    }
+    public float CurrentWallPainted => _currentWall.Painted;
 
-    public event UnityAction<Wall> WallSelected;
-    public event UnityAction WallDeselected;
+    public event Action<Wall> WallSelected;
+    public event Action WallDeselected;
 
     private void Awake()
     {
